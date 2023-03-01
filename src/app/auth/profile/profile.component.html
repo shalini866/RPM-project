@@ -1,0 +1,434 @@
+<nb-layout>
+  <nb-layout-header fixed>
+    <div>
+      <nb-user size="large" [picture]="profile?.imageURL" name="{{profile?.firstName}} {{profile?.lastName}}">
+      </nb-user>
+    </div>
+  </nb-layout-header>
+
+  <nb-layout-column class="p-0 m-0 w-100">
+    <div class="row">
+      <!-- Column 1: Left column -->
+      <div class="col-md-3 cardHeight">
+        <nb-card [size]="'large'" class="leftCardheight">
+          <nb-card-header>
+            <div class="col-12 mx-auto text-center">
+              <nb-button-group (valueChange)="updateSingleSelectGroupValue($event)" size="small" class="mx-auto">
+                <button nbButtonToggle size="small" pressed>ENROLL</button>
+                <button nbButtonToggle size="small">All</button>
+              </nb-button-group>
+            </div><br>
+            <!-- filter -->
+              <div class="=text-center icon_grp">
+                <nb-icon class="mx-3 " icon="funnel-outline" (click)="open(dialog)"></nb-icon>
+                <ng-template #dialog let-data let-ref="dialogRef">
+                  <nb-card>
+                    <nb-card-header>Filter</nb-card-header>
+                    <nb-card-body>
+                      <input nbInput fullWidth class="mb-3" type="search" 
+                        placeholder="First Name.."><br>
+                      <input nbInput fullWidth class="mb-3" type="search" 
+                        placeholder="Last Name.."><br>
+
+                        <input nbInput fullWidth class="mb-3" type="search" 
+                        placeholder="Provider"><br>
+                      
+                      <nb-select  fullWidth class="mb-3" placeholder="Care Manager" [(ngModel)]="selectedlist">
+                        <nb-option *ngFor="let user of userslist" [value]="user.providerID">
+                          {{ user.name }} 
+                        </nb-option>                          
+                      </nb-select> <br>
+                      <input nbInput fullWidth class="mb-3" type="search" placeholder="DD/MM/YY"><br>
+                      <div class="example-items-col">
+                        <nb-button-group size="small" (valueChange)="updateGenderValue($event)">
+                          <button nbButtonToggle pressed value='A'>ALL</button>
+                          <button nbButtonToggle value='M'>MALE</button>
+                          <button nbButtonToggle value='F'>FEMALE</button>
+                          <button nbButtonToggle value='O'>OTHER</button>
+                        </nb-button-group>
+                      </div> <br>
+                      <div class="mb-3">
+                        <nb-button-group size="small" (valueChange)="updateGenderValue($event)">
+                          <button nbButtonToggle pressed value='-1'>ALL</button>
+                          <button nbButtonToggle  value='0'>UNENROLLED</button>
+                          <button nbButtonToggle  value='1'>ENROLLED</button>
+                        </nb-button-group>
+                      </div>
+                    </nb-card-body>
+                    <nb-card-footer class="d-flex justify-content-around">
+                      <button size="small" class="col-md-2 col-2 d-flex w-25" nbButton status="warning">CLEAR</button>
+                      <button size="small" class="col-md-2 col-2 d-flex ms-2 w-25" nbButton status="danger"
+                        (click)="ref.close()">CANCEl</button>
+                      <button size="small" class="col-md-2 col-2 d-flex w-25" nbButton status="success"
+                        (click)="searchPatient('search')">SEARCH</button>
+                    </nb-card-footer>
+                  </nb-card>
+                </ng-template>
+
+                <nb-icon class="mx-3" icon="plus-circle-outline" (click)="open(dialogg)"></nb-icon>
+                <ng-template #dialogg let-data let-ref="dialogRef">
+                  <nb-card>
+                    <nb-card-header>Sing Up
+                      <nb-icon icon="close-outline" nbTooltip="close" class="cursor-pointer float-end fs-3"
+                        (click)="ref.close()"> </nb-icon>
+                    </nb-card-header>
+                    <nb-card-body>
+                      <div class="mb-3">
+                        <label class="mb-1" for="email">User Name or Email Address</label>
+                        <input nbInput fullWidth class="mb-3" type="text" placeholder="UserName or EmailAddress">
+                      </div>
+                      <div>
+                        <label class="mb-1" for="password">Password</label>
+                        <input nbInput fullWidth class="mb-3" type="password" placeholder="password"
+                          [(ngModel)]="addPatient" (ngModelChange)="valuechange($event)">
+                        <div>
+                          <div class="row">
+                            <div class="col-12 d-flex">
+                              <div class="mt-1 col-6  d-flex">
+                                <nb-checkbox disabled status="warning" [checked]="caps === true"></nb-checkbox>
+                                <div class="ms-3"
+                                  [ngClass]="{'text-success':caps === true , 'text-danger': caps === false }">At Least
+                                  One
+                                  Uppercas</div>
+                              </div>
+                              <div class="mt-1 col-6 d-flex ">
+                                <nb-checkbox disabled status="warning" [checked]="lower === true"></nb-checkbox>
+                                <div class="ms-3"
+                                  [ngClass]="{'text-success':lower === true , 'text-danger': lower === false }">At Least
+                                  One Lowercase</div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12  d-flex">
+                              <div class="mt-1  col-6 d-flex ">
+                                <nb-checkbox disabled status="warning" [checked]="number === true"></nb-checkbox>
+                                <div class="ms-3"
+                                  [ngClass]="{'text-success':number === true , 'text-danger': number === false }">At
+                                  Least
+                                  One Number</div>
+                              </div>
+                              <div class="mt-1 col-6  d-flex">
+                                <nb-checkbox disabled status="warning" [checked]="length === true"></nb-checkbox>
+                                <div class="ms-3"
+                                  [ngClass]="{'text-success':length === true , 'text-danger': length === false }"> At
+                                  Least 9 Characters</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </nb-card-body>
+                    <nb-card-footer>
+                      <div class="col display">
+                        <button nbButton status="success">CONTINUE</button>
+                      </div>
+                    </nb-card-footer>
+                  </nb-card>
+                </ng-template>
+
+                <nb-icon class="mx-3" icon="grid-outline"></nb-icon>
+                <nb-icon class="mx-3" icon="refresh-outline" (click)="refreshclick()"></nb-icon>
+              </div>
+            <hr>
+            <div>
+              <nb-form-field>
+                <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
+                <input nbInput type="search" placeholder="Search.." name="search" [(ngModel)]="patientSearch"
+                  (ngModelChange)="searchPatient()">
+              </nb-form-field>
+            </div>
+            <!-- <patient list> -->
+          </nb-card-header>
+          <nb-card-body>
+            <!--  -->
+            <nb-list class="mx-2 listht" >
+              <nb-list-item *ngFor="let data of searchUser" class="row py-2 px-0" (click)="profileList(data)">
+                  <div class="col-9 ">
+                    <nb-user size="large" class="mt-2 mb-2" [picture]="data?.imageUrl" name="{{data?.firstName}} {{data?.lastName}}" 
+                    title="{{data?.dob}} " ></nb-user>
+                  </div>
+                  <div class="col-1">
+                    <nb-icon  nbTooltip="Edit" nbTooltipPlacement="top" icon="edit-outline"></nb-icon> 
+                  </div>
+              </nb-list-item>
+            </nb-list>
+          </nb-card-body>
+        </nb-card>
+      </div>
+
+      <!-- Column 2: first column (empty in this case) -->
+      <div class="col-md-9 rightCardHeight">
+        <!-- <div class="row"> -->
+        <nb-card [size]="'small'" class=" p-1 mb-0 ">
+          <nb-card-body>
+            <div class="row">
+              <!--col1-->
+              <div class="col">
+                <div class="py-2">
+                  <nb-user class="pb-2 ps-2" size="giant" name="profileName" [picture]="profile?.imageURL ||profile?.imageUrl" onlyPicture>
+                  </nb-user>
+
+                  <div class="subtitle ps-2"> {{profile?.firstName}} {{profile?.lastName}}
+                    <div class="subtitle ps-2"> {{profile?.dob}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--col2-->
+              <div class="col">
+                <p>
+                  <nb-icon icon="phone" nbTooltip="Phone" nbTooltipPlacement="left">
+                  </nb-icon>
+                  <span class="ps-3">{{profile?.cellNumber || profile?.phoneNumber}}</span>
+                </p>
+                <br>
+                <div class="col-12 d-flex pb-2">
+                  <div class="col-1">
+                    <nb-icon icon="email-outline" nbTooltip="email" nbTooltipPlacement="left"></nb-icon>
+                  </div>
+                  <div class="col-11 ps-3">
+                    <span>{{profile?.profileEmail || profile?.email}}</span>
+                  </div>
+                </div>
+                <br>
+                <div class="col-12 d-flex pb-2">
+                  <div [ngSwitch]="profile?.gender">
+                    <div *ngSwitchCase="0"><i nbTooltip="Gender" nbTooltipPlacement="left"
+                        class="fa-solid fa-venus-mars m-2"></i>Male</div>
+                    <div *ngSwitchCase="1"><i nbTooltip="Gender" nbTooltipPlacement="left"
+                        class="fa-solid fa-venus-mars m-2"></i>Female</div>
+                    <div *ngSwitchCase="2"><i nbTooltip="Gender" nbTooltipPlacement="left"
+                        class="fa-solid fa-venus-mars m-2"></i>Others</div>
+                  </div>
+                </div>
+                <br>
+                <div class="d-flex">
+                  <div>
+                    <nb-icon class="fas fa-language" nbTooltip="language" nbTooltipPlacement="left">
+                    </nb-icon>
+                  </div>
+                  <div>
+                    <span class="ps-3">{{profile?.languageName}}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!--col3-->
+              <div class="col">
+                <div class="d-flex">
+                  <div>
+                    <nb-icon class="fas fa-location" nbTooltip="location" nbTooltipPlacement="left">
+                    </nb-icon>
+                    <span class="ps-3">{{profile?.address}},{{profile?.city}} ,{{profile?.zipCode}} </span>
+                  </div>
+                </div>
+                <br>
+                <div class="d-flex">
+                  <div>
+                    <nb-icon class="fas fa-male">
+                    </nb-icon>
+                    <span class="ps-3">{{profile?.screenName}}</span>
+                  </div>
+                </div>
+              </div>
+              <!--col4-->
+              <div class="col btncls">
+                <button nbButton status="danger" class="m-1 sizze justify-content-start" size="small">
+                  <nb-icon icon="info-outline"></nb-icon>ESCALATE
+                </button>
+                <button nbButton status="warning" class="m-1 sizze justify-content-start" size="small">
+                  <nb-icon icon="message-square-outline"></nb-icon>CHAT
+                </button><br>
+                <button nbButton status="info" class="m-1 sizze justify-content-start" size="small">
+                  <nb-icon icon="phone-call-outline"></nb-icon>CALL
+                </button>
+                <button nbButton status="success" class="m-1 sizze justify-content-start" size="small">
+                  <nb-icon icon="message-circle-outline"></nb-icon>MESSAGE
+                </button>
+                <button nbButton status="primary" class="m-1 sizze justify-content-start" size="small">
+                  ASSESSMENT
+                </button>
+                <button nbButton status="success" class="m-1 sizze justify-content-start" size="small">
+                  <nb-icon icon="file-outline"></nb-icon>GENERALS
+                </button>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+        <!-- </div> -->
+
+        <!-- Column 3: second column -->
+        <!-- <div class="col-md-12 p-0"> -->
+        <!-- <div> -->
+        <nb-tabset class="">
+          <nb-tab class="p-0" tabTitle="SNAPSHOTS" responsive>
+            <nb-card class="bottomCardHeight">
+              <nb-card-header>Last vital measured:
+                <div class="col display">
+                  <nb-icon class="mx-2" nbTooltip="Refresh List" nbTooltipPlacement="top" icon="refresh-outline"
+                  (click)="refreshclick()" ></nb-icon>
+                </div>
+              </nb-card-header>
+              <nb-card-body>
+                <div class="row">
+    
+                  <div class="col-4">
+                    <div class="row">
+                      <div class="col-4">
+                        <div>
+                          <img src="assets/BP.png" alt="BLOOD PRESSURE" width="70px">
+                        </div>
+                      </div>
+                      <div class="col-8">
+                        <div><b>Blood Pressure</b></div>
+                        <div><b> {{bloodPressure || '----'}} </b></div>
+                      </div>
+                    </div>
+    
+                    <div class="row">
+                      <div class="col-4">
+                        <div>
+                          <img src="assets/weight.png" alt="BLOOD PRESSURE" width="70px">
+                        </div>
+                      </div>
+                      <div class="col-8">
+                        <div><b>Weight</b></div>
+                        <div><b>{{weight || '----'}}</b></div>
+                      </div>
+                    </div>
+    
+                    <div class="row">
+                      <div class="col-4">
+                        <div>
+                          <img src="assets/ECG.png" alt="BLOOD PRESSURE" width="70px">
+                        </div>
+                      </div>
+                      <div class="col-8">
+                        <div><b>ECG</b></div>
+                        <div><b>{{ecg || '----'}}</b></div>
+                      </div>
+                    </div>
+    
+                    <div class="row">
+                      <div class="col-4">
+                        <div>
+                          <img src="assets/lungs.png" alt="BLOOD PRESSURE" width="70px">
+                        </div>
+                      </div>
+                      <div class="col-8">
+                        <div><b>Peak Flow</b></div>
+                        <div><b>{{peakFlow || '----'}}</b></div>
+                      </div>
+                    </div>
+    
+                  </div>
+    
+                  <div class="col-4">
+                    <div class="row">
+                      <div class="col-4">
+                        <div>
+                          <img src="assets/SPO.png" alt="BLOOD PRESSURE" width="70px">
+                        </div>
+                      </div>
+                      <div class="col-8">
+                        <div><b>SPO2</b></div>
+                        <div><b>{{spo2 || '----'}}</b></div>
+                      </div>
+                    </div>
+    
+                    <div class="row">
+                      <div class="col-4">
+                        <div>
+                          <img src="assets/Temperature.png" alt="BLOOD PRESSURE" width="70px">
+                        </div>
+                      </div>
+                      <div class="col-8">
+                        <div><b>Temperature</b></div>
+                        <div><b>{{temperature || '----'}}</b></div>
+                      </div>
+                    </div>
+    
+                    <div class="row">
+                      <div class="col-4">
+                        <div>
+                          <img src="assets/PainLevel.png" alt="BLOOD PRESSURE" width="70px">
+                        </div>
+                      </div>
+                      <div class="col-8">
+                        <div><b>Pain Level</b></div>
+                        <div><b>{{painLevel || '----'}}</b></div>
+                      </div>
+                    </div>
+    
+                    <div class="row">
+                      <div class="col-4">
+                        <div>
+                          <img src="assets/stability.png" alt="BLOOD PRESSURE" width="70px">
+                        </div>
+                      </div>
+                      <div class="col-8">
+                        <div><b>Stability</b></div>
+                        <div><b>{{'----'}}</b></div>
+                      </div>
+                    </div>
+    
+                  </div>
+    
+                  <div class="col-4">
+                    <div class="row">
+                      <div class="col-4">
+                        <div>
+                          <img src="assets/Gulcose.png" alt="BLOOD PRESSURE" width="70px">
+                        </div>
+                      </div>
+                      <div class="col-8">
+                        <div><b>Gulcose</b></div>
+                        <div><b>{{glucose || '---'}}</b></div>
+                      </div>
+                    </div>
+    
+                    <div class="row">
+                      <div class="col-4">
+                        <div>
+                          <img src="assets/height.png" alt="BLOOD PRESSURE" width="70px">
+                        </div>
+                      </div>
+                      <div class="col-8">
+                        <div><b>Height</b></div>
+                        <div><b>{{height || '----'}}</b></div>
+                      </div>
+                    </div>
+    
+                    <div class="row">
+                      <div class="col-4">
+                        <div>
+                          <img src="assets/PHQ9.png" alt="BLOOD PRESSURE" width="70px">
+                        </div>
+                      </div>
+                      <div class="col-8">
+                        <div><b>PHQ9 Score</b></div>
+                        <div><b>{{phq9 || '----'}}</b></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </nb-card-body>
+            </nb-card>
+          </nb-tab>
+          <nb-tab class="p-0" tabTitle="VITALS" responsive>
+          <app-vitals></app-vitals>
+          </nb-tab>
+          <nb-tab class="p-0" tabTitle="ALERTS" responsive> </nb-tab>
+          <nb-tab class="p-0" tabTitle="ASSESSMENTS" responsive> </nb-tab>
+          <nb-tab class="p-0" tabTitle="DOCUMENTS" responsive> </nb-tab>
+          <nb-tab class="p-0" tabTitle="HISTORY" responsive> </nb-tab>
+          <nb-tab class="p-0" tabTitle="TASKS" responsive> </nb-tab>
+        </nb-tabset>
+      
+        
+      
+      </div>
+    </div>
+  </nb-layout-column>
+</nb-layout>
