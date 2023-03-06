@@ -1,8 +1,7 @@
 <nb-layout>
   <nb-layout-header fixed>
     <div>
-      <nb-user size="large" [picture]="profile?.imageURL" name="{{profile?.firstName}} {{profile?.lastName}}">
-      </nb-user>
+      <nb-user size="large" [picture]="profile?.imageURL" name="{{profile?.firstName}} {{profile?.lastName}}"> </nb-user>
     </div>
   </nb-layout-header>
 
@@ -20,7 +19,7 @@
             </div><br>
             <!-- filter -->
               <div class="=text-center icon_grp">
-                <nb-icon class="mx-3 " icon="funnel-outline" (click)="open(dialog)"></nb-icon>
+                <nb-icon  icon="funnel-outline" (click)="open(dialog)">
                 <ng-template #dialog let-data let-ref="dialogRef">
                   <nb-card>
                     <nb-card-header>Filter</nb-card-header>
@@ -64,8 +63,9 @@
                     </nb-card-footer>
                   </nb-card>
                 </ng-template>
+              </nb-icon>
 
-                <nb-icon class="mx-3" icon="plus-circle-outline" (click)="open(dialogg)"></nb-icon>
+                <nb-icon  icon="plus-circle-outline" (click)="open(dialogg)">
                 <ng-template #dialogg let-data let-ref="dialogRef">
                   <nb-card>
                     <nb-card-header>Sing Up
@@ -126,9 +126,9 @@
                     </nb-card-footer>
                   </nb-card>
                 </ng-template>
-
-                <nb-icon class="mx-3" icon="grid-outline"></nb-icon>
-                <nb-icon class="mx-3" icon="refresh-outline" (click)="refreshclick()"></nb-icon>
+              </nb-icon>
+                <nb-icon  icon="grid-outline"></nb-icon>
+                <nb-icon  icon="refresh-outline" (click)="refreshclick()"></nb-icon>
               </div>
             <hr>
             <div>
@@ -142,8 +142,8 @@
           </nb-card-header>
           <nb-card-body>
             <!--  -->
-            <nb-list class="mx-2 listht" >
-              <nb-list-item *ngFor="let data of searchUser" class="row py-2 px-0" (click)="profileList(data)">
+            <nb-list class=" mx-2 listht" >
+              <nb-list-item *ngFor="let data of searchUser" class=" row py-2 px-0" (click)="profileList(data)">
                   <div class="col-9 ">
                     <nb-user size="large" class="mt-2 mb-2" [picture]="data?.imageUrl" name="{{data?.firstName}} {{data?.lastName}}" 
                     title="{{data?.dob}} " ></nb-user>
@@ -261,7 +261,7 @@
         <!-- Column 3: second column -->
         <!-- <div class="col-md-12 p-0"> -->
         <!-- <div> -->
-        <nb-tabset class="">
+        <nb-tabset (changeTab)="onChangeTab($event)">
           <nb-tab class="p-0" tabTitle="SNAPSHOTS" responsive>
             <nb-card class="bottomCardHeight">
               <nb-card-header>Last vital measured:
@@ -418,16 +418,21 @@
           </nb-tab>
           <nb-tab class="p-0" tabTitle="VITALS" responsive>
           <app-vitals></app-vitals>
+          </nb-tab> 
+          <nb-tab class="p-0" tabTitle="ALERTS" responsive >
+           <div *ngIf="profile" (click)="getalertslist(this.profile)"></div>
+            <app-alerts [getProfileDetails]="profile"></app-alerts> 
           </nb-tab>
-          <nb-tab class="p-0" tabTitle="ALERTS" responsive> </nb-tab>
-          <nb-tab class="p-0" tabTitle="ASSESSMENTS" responsive> </nb-tab>
-          <nb-tab class="p-0" tabTitle="DOCUMENTS" responsive> </nb-tab>
-          <nb-tab class="p-0" tabTitle="HISTORY" responsive> </nb-tab>
-          <nb-tab class="p-0" tabTitle="TASKS" responsive> </nb-tab>
+          <nb-tab class="p-0" tabTitle="ASSESSMENTS" responsive>
+            <app-assessment  [getassessmentDetails]="profile"></app-assessment> </nb-tab>
+          <nb-tab class="p-0" tabTitle="DOCUMENTS" responsive>
+             <app-documents [getdocumentsDetails]="profile"></app-documents></nb-tab>
+          <nb-tab class="p-0" tabTitle="HISTORY" responsive>
+            <app-history [gethistoryDetails]="profile"></app-history> </nb-tab>
+          <nb-tab class="p-0" tabTitle="TASKS" responsive> 
+            <app-task [gettaskdetails]="profile"></app-task>
+          </nb-tab>
         </nb-tabset>
-      
-        
-      
       </div>
     </div>
   </nb-layout-column>

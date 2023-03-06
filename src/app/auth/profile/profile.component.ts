@@ -163,7 +163,7 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
       "count": 25, 
       "monitored": -1,
       "morbidity": -1,
-      "providerID": this.profile.userName,
+      "providerID": '',
       "alarm": -1,
       "careManagerID": this.selectedlist,
       "term": this.patientSearch
@@ -222,6 +222,12 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
         this.patientVitalList = patientVitalList;
         this.aranageVitals()
     })
+    })
+   
+  }
+  getalertslist(data:any){
+    this.careService.alertslist(this.profile).subscribe((res:any) =>{
+      console.log('check the alertslist',res);
       
     })
   }
@@ -312,12 +318,15 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
     });
   }
  
- 
+
+  onChangeTab(event: any) {
+    if (event.tabTitle === 'VITALS') {
+    }
+    if (event.tabTitle === 'ALERTS') {
+      if (this.profile) {
+        this.getalertslist(this.profile)
+      }
+    }
+  }
 }
  
-// h 7
-// pf 31
-// bp 1
-// o 13
-// hr 
-// g -2
