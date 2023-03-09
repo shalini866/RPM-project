@@ -21,6 +21,7 @@ import { DocumentsComponent } from './profile/documents/documents.component';
 import { HistoryComponent } from './profile/history/history.component';
 import { TaskComponent } from './profile/task/task.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { AlertsNotesComponent } from './profile/alerts/alerts-notes/alerts-notes.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     AssessmentComponent,
     DocumentsComponent,
     HistoryComponent,
-    TaskComponent
+    TaskComponent,
+    AlertsNotesComponent
   ],
   imports: [
     CommonModule,

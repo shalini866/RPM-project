@@ -25,7 +25,7 @@ set gettaskdetails(value:any){
   constructor(       
     private careService:CareMangerService
   ){}
-
+ 
   gettasklist(type?: any){
     if (type === -1) {
      this.dateValue =  moment(this.dateValue).subtract(1, 'days').format('YYYY-MM-DD');

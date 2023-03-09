@@ -1,0 +1,34 @@
+ <nb-card style="height:60%">
+    <nb-card-header >
+        <div class="d-flex justify-content-between mb-4">
+            <h6 class="mt-2">Alert Notes</h6>
+            <button class="btn btn-success">SMART NOTES</button>     
+        </div>
+     
+    </nb-card-header>
+    <nb-card-body>
+        <div class="col-12 d-flex d-block ">
+            <textarea nbInput fullWidth placeholder="Write Notes" rows="4" cols="75"></textarea>
+        </div>
+        <nb-list >
+            <nb-list-item  class="d-block" *ngFor = 'let note of alertsDataList'>
+                <div class="d-flex">
+                    <span class="subtitle text-primary col-3">Notes </span>
+                    <div [innerHTML]="note.actionData?.notes || note.actionData" class="col-8"></div>
+                </div>
+                <div class="d-flex ">
+                    <span class="subtitle text-primary col-3">Provider Name</span>
+                    <div class="col-8">{{note.providerName}}</div>
+                </div>
+                <div class="d-flex">
+                    <span class="subtitle text-primary col-3">Created At</span>
+                    <div class="col-8">{{note.actionTime | date : 'MM/dd/YYYY'}} </div>
+                </div>
+            </nb-list-item>
+        </nb-list>
+    </nb-card-body>
+    <nb-card-footer class="d-flex justify-content-end">
+        <button nbButton class="mx-2" status="danger" (click)="dialog.close()">DONE</button>
+        <button nbButton disabled="ture">ADD</button>
+    </nb-card-footer>
+</nb-card>
