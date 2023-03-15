@@ -57,15 +57,15 @@ export class LoginComponent implements OnInit{
       let userID = data.userID;
       console.log('the time is given as2:', new Date().getMilliseconds());
       
-      if (userID){
-        this.authService.getProfiles(userID).subscribe(data =>{
-        console.log("getProfilessssssssssss", data ); 
-         this.authService.profile = data;
-          this.routing.navigate([`/auth/profile/${userID}`]);
-        // this.routing.navigate([`/auth/profile`])
+      this.routing.navigate([`/profile/${userID}`]);
+      // if (userID){
+      //   this.authService.getProfiles(userID).subscribe(data =>{
+      //   console.log("getProfilessssssssssss", data ); 
+      //    this.authService.profile = data;
+      //   // this.routing.navigate([`/auth/profile`])
 
-      })
-      }
+      // })
+      // }
     })
     console.log('the time is given as3:', new Date().getMilliseconds());
   }

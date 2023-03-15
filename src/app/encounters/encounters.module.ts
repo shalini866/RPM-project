@@ -1,29 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AuthRoutingModule } from './auth-routing.module';
-import { LoginComponent } from './login/login.component';
+import { EncountersRoutingModule } from './encounters-routing.module';
+import { EncounterComponent } from './encounter/encounter.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NbThemeModule, NbLayoutModule, NbButtonModule, 
-  NbCardModule, NbIconModule, NbFormFieldModule, 
-  NbInputModule,  NbActionsModule, NbListModule,
-   NbUserModule, NbTooltipModule, NbSpinnerModule, 
-   NbStepperModule, NbTabsetModule, NbButtonGroupModule, 
-   NbSearchModule, NbDialogModule, NbCheckboxModule, NbAutocompleteModule, NbSelectModule, NbDatepickerModule, NbSidebarModule } from '@nebular/theme';
+import { NbActionsModule, NbAutocompleteModule, NbButtonGroupModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbDatepickerModule, NbFormFieldModule, NbIconModule, NbInputModule, NbLayoutModule, NbListModule, NbMenuModule, NbRouteTabsetModule, NbSearchModule, NbSelectModule, NbSpinnerModule, NbStepperModule, NbTabsetModule, NbTooltipModule, NbUserModule } from '@nebular/theme';
 import { SharedModule } from '../shared/shared.module';
-import { config } from 'rxjs';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { NgChartjsModule } from 'ng-chartjs';
 
 
 @NgModule({
   declarations: [
-    LoginComponent,
-   
+    EncounterComponent
   ],
   imports: [
     CommonModule,
-    AuthRoutingModule,
+    EncountersRoutingModule,
     ReactiveFormsModule,
     FormsModule,
     NbTooltipModule,
@@ -47,13 +39,10 @@ import { NgChartjsModule } from 'ng-chartjs';
     NbCheckboxModule,
     NbAutocompleteModule,
     NbSelectModule,
-    NbDialogModule.forRoot(),
     NbDatepickerModule,
     NgxDatatableModule,
-    NgChartjsModule,
-   
-
-
+    NbMenuModule,
+    NbRouteTabsetModule,
   ]
 })
-export class AuthModule { }
+export class EncountersModule { }

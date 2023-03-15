@@ -1,0 +1,51 @@
+.sizze{
+    width: 70%;
+    text-align: justify;
+ }
+ .btncls{
+    text-align: center;
+ }
+ input[type="search"][value="dark"]::-webkit-search-cancel-button {
+    background:
+     linear-gradient(135deg, transparent 0%,transparent 43%,#fff 45%,#fff 55%,transparent 57%,transparent 100%) ;
+  }
+ .icon_grp{
+    display: flex;
+    justify-content: space-around;
+ }
+  .display{
+    display: flex;
+    justify-content: flex-end;
+  }
+ 
+ .cardHeight{
+    height: calc(var(--wh, 1vh) * 100) !important;
+    //background-color: red;
+ }
+ 
+ .leftCardheight{
+    height: 100%;
+   //  background-color: chartreuse;
+    margin-left: 80px;
+ }
+ // .scrollbar{
+ //    max-height: 100%;
+ //    overflow-y: hidden;
+ // }
+ 
+ .rightCardHeight{
+    // height:90%;
+    height: calc(var(--wh, 1vh) * 100) !important;
+    overflow: auto;
+ }
+ .listht{
+    overflow-x: hidden !important;
+ }
+
+ 
+
+ .scroll{
+    overflow-x: scroll;
+ }
+ 
+ 

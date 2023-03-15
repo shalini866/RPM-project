@@ -1,0 +1,57 @@
+<nb-card size="giant" class="sidegap">
+  <nb-card-body class="btncls ">
+    <div class="row">
+      <button nbButton shape="rectangle" class=" col mx-3 py-3" status="primary"><nb-icon
+          icon="clock-outline"></nb-icon>WAITING ROOM </button>
+      <button nbButton shape="rectangle" class="  col mx-3 py-3" status="success"> <nb-icon
+          icon="calendar-outline"></nb-icon>SCHEDULED </button>
+      <button nbButton shape="rectangle" class=" btn_async  col  mx-3 "> <nb-icon
+          icon="flip-2-outline"></nb-icon>ASYNCHRONOUS </button>
+      <button nbButton shape="rectangle" class=" col  mx-3" status="danger"> <nb-icon 
+          icon="phone-call-outline"></nb-icon>CALL BACK</button>
+      <button nbButton shape="rectangle" class=" col  mx-3" status="warning"> <nb-icon
+          icon="list-outline"></nb-icon>FOLLOW UP</button>
+      <button nbButton shape="rectangle" class=" btn_comp  col mx-3"> <nb-icon
+          icon="checkmark-outline"></nb-icon>COMPLETED</button>
+    </div>
+    <div class="pt-4">
+      <input nbInput type="search"  placeholder="search" class=" mx-2">
+      <nb-icon icon="refresh-outline"  class=" mx-1"></nb-icon>
+    </div>
+   <div  class="pt-4">
+    <ngx-datatable class="material h-100" [rows]="" columnMode="force" [headerHeight]="50" [footerHeight]="0" 
+    [rowHeight]="50" [scrollbarV]="true" class=" mx-2">
+      <ngx-datatable-column name=" Name: "  prop="" [flexGrow]="3">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Age:" prop="">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+        
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Gender:" prop="">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+        
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Assessment:"  prop="">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          
+        </ng-template>  
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Site:"  prop="" >
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Reported:" prop="">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+   </div>
+  </nb-card-body>
+</nb-card>

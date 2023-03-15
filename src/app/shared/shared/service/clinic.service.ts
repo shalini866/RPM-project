@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
+import {  HttpClient,  } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClinicService {
+ 
 
-  constructor() { }
+  constructor(
+    private http:HttpClient,
+  ) { }
 
   getvitals(){
     return [
@@ -119,5 +126,12 @@ export class ClinicService {
       }
   ]
 
+  }
+
+  getStarts(payload:any):Observable<any>{
+    return this.http.post(`Encounters/GetStats`,payload)
+  }
+  encountersList(data:any):Observable<any>{
+    return this.http.post(`Encounters/List/Encounters`,data)
   }
 }

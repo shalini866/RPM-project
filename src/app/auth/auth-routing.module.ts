@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ProfileComponent } from '../provider/profile/profile.component';
+import { ProfileResolver } from '../shared/resolver/profile.resolver';
 import { LoginComponent } from './login/login.component';
-import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -10,8 +11,11 @@ const routes: Routes = [
     
   },
   {
-    path: 'profile/:id',
-    component: ProfileComponent
+    path: 'profile/:userId',
+    component: ProfileComponent,
+    resolve: {
+      profileData: ProfileResolver
+    }
   },
 ];
 
