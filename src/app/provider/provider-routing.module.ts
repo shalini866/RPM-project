@@ -24,7 +24,7 @@ const routes: Routes = [
         resolve: { 
           profileData: ProfileResolver
         }
-      }
+       },
     ]
   }
 

@@ -7,11 +7,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NbActionsModule, NbAutocompleteModule, NbButtonGroupModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbDatepickerModule, NbFormFieldModule, NbIconModule, NbInputModule, NbLayoutModule, NbListModule, NbMenuModule, NbRouteTabsetModule, NbSearchModule, NbSelectModule, NbSpinnerModule, NbStepperModule, NbTabsetModule, NbTooltipModule, NbUserModule } from '@nebular/theme';
 import { SharedModule } from '../shared/shared.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { IndexComponent } from './index/index.component';
 
 
 @NgModule({
   declarations: [
-    EncounterComponent
+    EncounterComponent,
+    IndexComponent,
   ],
   imports: [
     CommonModule,
