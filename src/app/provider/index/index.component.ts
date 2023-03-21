@@ -33,7 +33,7 @@ export class IndexComponent implements OnInit, AfterViewChecked {
     {
       title: 'Encounters',
       icon: 'book-outline',  
-       link: `/profile/${this.profile.userID}/encounters/encounter`,
+       link: `/profile/${this.profile.userID}/encounters/encounter/waitingroom`,
     },
    
     {

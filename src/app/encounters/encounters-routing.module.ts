@@ -7,25 +7,26 @@ import { IndexComponent } from './index/index.component';
 const routes: Routes = [
 
   {
-    path:'encounter',
-    component:EncounterComponent
-  },
-  {
-    path: '',
+    path: 'encounter',
     component: IndexComponent,
     children: [
-      { path: '', redirectTo: 'waitingroom', pathMatch: 'full' },
+
+      {
+        path: '',
+        redirectTo: 'waitingroom', 
+        pathMatch: 'full'
+      },
       {
         path: ':buckets',
-        component:EncounterComponent ,
-        data: { title: 'Encounter Bucket' },
+        component: EncounterComponent,
       },
+
     ]
   }
-   
+
 ];
 
-@NgModule({ 
+@NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })

@@ -13,17 +13,23 @@ export class IndexComponent {
   variable: any;
   statusdetails: any[] =[];
   profile: any;
- 
+  type: any =[];
+  isLoadingss = false;
+  rows: any;
   constructor(
     private clinicService: ClinicService,
     private authService: AuthService,
-    private routing: Router,
-  ){}
+    public route: Router,
+    
+  ){
+    
+  }
   ngOnInit() {
     this.profile = this.authService.profile;
     console.log('the given profile', this.profile);
     this.getstatslist()
   }
+
   getstatslist() {
     const payload = {
       "clinicID": this.profile.clinicID,
@@ -67,8 +73,10 @@ export class IndexComponent {
     }, (err: any) => {
       console.log('API ERROR');
     })
-    
+ 
   }
+  
+  
   getStatsNub(type:any) {
     let count = '0';
     (this.statusdetails ).map((status: any) => {
@@ -78,4 +86,12 @@ export class IndexComponent {
     });
     return count;
   }
+
+
+  
+ bucket(type:any){
+  this.getstatslist()
+  this.route.navigate([`/profile/${this.profile.userID}/encounters/encounter/${type}`])
+ }
+ 
 }

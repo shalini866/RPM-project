@@ -24,8 +24,8 @@ export class CareMangerService {
     return this.http.get(`Clinics/ClinicPatient/${payload.userID}/${payload.clinicID}/${payload.patientID}`);
   }
 
-  snapshotlist(payload:any):Observable<any>{
-    return this.http.get(`Vitals/List/Top/${payload.userID}`)
+  snapshotlist(userID:any):Observable<any>{
+    return this.http.get(`Vitals/List/Top/${userID}`, { headers: this.getHeaders() })
   }
  
   getHeaders() {

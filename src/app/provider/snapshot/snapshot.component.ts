@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NbDialogService } from '@nebular/theme';
 import { AuthService } from 'src/app/shared/shared/service/auth.service';
 import { CareMangerService } from 'src/app/shared/shared/service/care-manger.service';
@@ -24,33 +25,41 @@ export class SnapshotComponent implements OnInit {
     height = '';
     phq9 = '';
     peakFlow = "";
-  @Input()
-  get getsnapshotdetails(){
-    return this.profile
-  }
-  set getsnapshotdetails(value:any){
-    if(value){
-      this.profile = value
-      this.profileList()
-    }
-  }
+  patientId: any;
+  patientUserId: any;
+  // @Input()
+  // get getsnapshotdetails(){
+  //   return this.profile
+  // }
+  // set getsnapshotdetails(value:any){
+  //   if(value){
+  //     this.profile = value
+  //     this.profileList()
+  //   }
+  // }
     constructor(
       private authService: AuthService,
       private dialogService: NbDialogService,
       private careService : CareMangerService,
       private clinicservice: ClinicService,
-      private cd: ChangeDetectorRef
+      private cd: ChangeDetectorRef,
+      private activate: ActivatedRoute,
     ){
+      this.activate.queryParamMap.subscribe((queryparam: any) => {
+        this.patientUserId = activate.snapshot.queryParams['patientUserId']
+        this.getSnapshot()
+      })
       this.vitalList = this.clinicservice.getvitals();
     }
   
     ngOnInit(): void {
-      // this.profileList
+
+
       // this.aranageVitals
     }
   
-    profileList(){
-      this.careService.snapshotlist(this.profile).subscribe((res:any)=>{
+    getSnapshot(){
+      this.careService.snapshotlist(this.patientUserId).subscribe((res:any)=>{
         console.log('snapshot list',res);
         this.patientVitalList = res.vitalsList;
         console.log('this is patientVitallist', this.patientVitalList);
@@ -162,6 +171,6 @@ export class SnapshotComponent implements OnInit {
     }
   
     refreshclick(){
-      this.profileList();
+      this.getSnapshot();
     }
   }

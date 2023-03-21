@@ -1,5 +1,5 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, TemplateRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogService, NbRouteTab } from '@nebular/theme';
 import { AuthService } from 'src/app/shared/shared/service/auth.service';
 import { CareMangerService } from 'src/app/shared/shared/service/care-manger.service';
@@ -39,50 +39,44 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
   patientVitalList: any = [];
   vitalsOriginal: any[] = [];
  
-  // tabs: NbRouteTab[] = [
-  //   {
-  //     title: 'snapshot',
-  //     route: './snapshot',
-  //   },
-  //   {
-  //     title: 'vitals',
-  //     responsive: true,
-  //     route: './vitals',
-  //   },
-  //   {
-  //     title: 'alerts',
-  //     responsive: true,
-  //     route: './alerts',
-      
-  //   },
-  //   {
-  //     title: 'assessment',
-  //     responsive: true,
-  //     route: './assessment',
-  //   },
-  //   {
-  //     title: 'documents',
-  //     responsive: true,
-  //     route: './documents',
-  //   },
-  //   {
-  //     title: 'history',
-  //     responsive: true,
-  //     route: './history',
-  //   },
-  //   {
-  //     title: 'task',
-  //     responsive: true,
-  //     route: './task',
-  //   },
-  // ];
+  tabs: NbRouteTab[] = [
+    {
+      title: 'Snapshot',
+      // route: `snapshot`,
+    },
+    {
+      title: 'Vitals',
+      // route: `vitals`,
+    },
+    {
+      title: 'Alerts',
+      // route: `alerts`,
+    },
+    {
+      title: 'Assessments',
+      // route: `encounters`,
+    },
+    {
+      title: 'Documents',
+      // route: `documents/`,
+    },
+    {
+      title: 'History',
+      // route: `history/`,
+    },
+    {
+      title: 'Tasks',
+      // route: `task/`,
+    },
+  ];
 
   constructor(private cd: ChangeDetectorRef,
     private authService: AuthService,
     private dialogService: NbDialogService,
     private careService : CareMangerService,
     private clinicservice: ClinicService,
-    private activatedroute: ActivatedRoute) 
+    private activatedroute: ActivatedRoute,
+    private router: Router,) 
     {
       console.log('this is activatedRoute', activatedroute.snapshot.data['profileData']);
     this.vitalList = this.clinicservice.getvitals();
@@ -116,7 +110,7 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
  
 
   ngOnInit() {
-    this.profile = this.authService.profile;
+    // this.profile = this.authService.profile;
     console.log('the data in the profile', this.profile);
     this.searchPatient();
 
@@ -182,8 +176,8 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
    
 
     const payload = {
-      "userID": this.profile.userID,
-      "clinicID": this.profile.clinicID,
+      "userID": this.authService.profile.userID,
+      "clinicID": this.authService.profile.clinicID,
       "firstName": "",
       "lastName": "",
       "dob": "",
@@ -207,6 +201,9 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
     }
    
     this.authService.search(payload).subscribe((data: any) => {
+      if (!this.profile) {
+        this.profileList(data.clinicPatientList[0])
+      }
       console.log('data', data.clinicPatientList);
       this.searchUser = data.clinicPatientList
       console.log('value in the data.clinicPatientList', data.clinicPatientList);
@@ -225,6 +222,11 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
     }
     this.careService.displayProfile(payload).subscribe((res:any) =>{
       this.profile = res;
+      this.router.navigate(['profile', this.authService.profile.userID, this.profile.patientID, 'snapshot'], {
+        queryParams: {
+          patientUserId: this.profile.userID,
+        }
+      })
       console.log('check the ',res);
       console.log('check  the userid',res.userID);
       
@@ -254,12 +256,12 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
     })
    
   }
-  getalertslist(data:any){
-    this.careService.alertslist(this.profile).subscribe((res:any) =>{
-      console.log('check the alertslist',res);
+  // getalertslist(data:any){
+  //   this.careService.alertslist(this.profile).subscribe((res:any) =>{
+  //     console.log('check the alertslist',res);
       
-    })
-  }
+  //   })
+  // }
   // aranageVitals() {
 
   //   this.patientVitalList.map((list: any) => {
@@ -352,9 +354,18 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
     if (event.tabTitle === 'VITALS') {
     }
     if (event.tabTitle === 'ALERTS') {
-      if (this.profile) {
-        this.getalertslist(this.profile)
-      }
+      // if (this.profile) {
+      //   this.getalertslist(this.profile)
+      // }
+    }
+  }
+  tabChanged($event: any) {
+    console.log($event)
+    if ($event.title === 'Snapshot') {
+      this.router.navigate(['profile', this.authService.profile.userID, this.profile.patientID, 'snapshot'])
+    }
+    else if ($event.title === 'Vitals') {
+      this.router.navigate(['profile', this.authService.profile.userID, this.profile.patientID, 'vitals'])
     }
   }
 }

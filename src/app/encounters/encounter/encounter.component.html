@@ -1,63 +1,57 @@
-<nb-card size="giant" class="sidegap">
-  <nb-card-body class="">
-    <!-- <div class="row">
-      <div class="col">
-        <button nbButton shape="rectangle" status="primary" class="w-100 px-0 me-5 " (click)="getstatslist()">
-          <nb-icon icon="clock-outline"></nb-icon>WAITING ROOM
-          {{getStatsNub('6')}}
-        </button>
-      </div>
-      <div  class="col " >
-        <button nbButton shape="rectangle" status="success" class="w-100 px-0 me-5" (click)="getstatslist()"> 
-          <nb-icon icon="calendar-outline"></nb-icon>SCHEDULED
-          {{getStatsNub('1')}}
-        </button>
-      </div>
-      <div  class="col">
-        <button nbButton shape="rectangle" class="btn_async w-100 px-0 me-5" (click)="getstatslist()">
-           <nb-icon icon="flip-2-outline"></nb-icon>ASYNCHRONOUS 
-           {{getStatsNub('0')}}
-          </button>
-      </div>
-      <div  class="col" >
-        <button nbButton shape="rectangle" status="danger" class="w-100 px-0 me-5" (click)="getstatslist()">
-           <nb-icon icon="phone-call-outline"></nb-icon>CALLBACK
-           {{getStatsNub('3')}}
-          </button>
-      </div>
-      <div  class="col">
-        <button nbButton shape="rectangle" status="warning" class="w-100 px-0 me-5" (click)="getstatslist()">
-           <nb-icon icon="list-outline"></nb-icon>FOLLOW UP
-           {{getStatsNub('4')}}
-          </button>
-      </div>
-      <div  class="col">
-        <button nbButton shape="rectangle" class=" btn_comp w-100 px-0 me-5" (click)="getstatslist()"> 
-          <nb-icon icon="checkmark-outline"></nb-icon>COMPLETED
-          {{getStatsNub('7')}}
-        </button>
-      </div>
+<nb-card-body >
+  <div class="pt-4 d-flex" *ngIf="this.encounterBucket ==='waitingroom'|| this.encounterBucket =='asynchronous'||  this.encounterBucket =='callback'
+   || this.encounterBucket =='followup'|| this.encounterBucket =='completed'">
+    <input nbInput type="search" placeholder="search" class=" mx-2">
+    <nb-icon icon="refresh-outline" class=" mx-1"></nb-icon>
+  </div>
+  <div class="d-flex justify-content-between " *ngIf="this.encounterBucket =='scheduled'">
+    <div class="d-flex">
+      <div class="pt-4">
+       <input nbInput type="search" placeholder="search" class=" mx-2">
+       <nb-icon icon="refresh-outline" class=" mx-1"></nb-icon>
+     </div> 
+     <div class="d-flex align-items-center pt-4">
+         <button class="mx-2" nbButton outline status="success" (click) = getdate(1)>TODAY</button>
+         <button class="mx-2" nbButton outline status="success" (click) = getdate(7)>THIS WEEK </button>
+         <button class="mx-2" nbButton outline status="success" (click) = getdate(31)>THIS MONTH</button>
+     </div>
+     <div class="d-flex align-items-center pt-4">
+       <nb-icon  class="cursor-pointer" style="font-size: 3rem;" icon="arrow-ios-back-outline" (click) = getdate(-1)>
+       </nb-icon>
+       <input nbInput placeholder="Date" class="w-50 mx-2 text-center px-5" [nbDatepicker]="datePicker" [(ngModel)]="dateValue">
+       <nb-datepicker #datePicker ></nb-datepicker>
+       <nb-icon  style="font-size: 3rem;" class="cursor-pointer" icon="arrow-ios-forward-outline" (click) = getdate(1)>
+       </nb-icon>
+   </div>
     </div>
-    <div class="pt-4">
-      <input nbInput type="search" placeholder="search" class=" mx-2">
-      <nb-icon icon="refresh-outline" class=" mx-1"></nb-icon>
-    </div> -->
-    <!-- <div  class="pt-4"> -->
-    <ngx-datatable class="material h-100 pt-4 " [rows]="rows" columnMode="force" [headerHeight]="50" [footerHeight]="0"
-      [rowHeight]="50" [scrollbarV]="true">
+    <div class="d-flex align-items-center pt-4">
+     <div>
+         <button nbButton  status="primary" class="me-4">GROUP MEETING</button>
+         <button nbButton  status="primary">SCHEDULED APPOINTMENT</button>
+     </div>
+    </div>
+ </div>
+
+ 
+  <ngx-datatable class="material h-100 pt-4 " [rows]="rows" columnMode="force" [headerHeight]="50" [footerHeight]="0"
+      [rowHeight]="50" [scrollbarV]="true" (activate)="onActivate($event)"> 
       <ngx-datatable-column name=" Name: " prop="parseExtraData" [flexGrow]="3">
-        <ng-template let-value="value" ngx-datatable-cell-template>
+        <ng-template let-value="value" ngx-datatable-cell-template >
           {{value.firstName}} {{value.lastName}}
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Age:" prop="parseExtraData">
+      <ngx-datatable-column name="Age:" prop="parseExtraData" [ngSwitch]>
         <ng-template let-value="value" ngx-datatable-cell-template>
           {{value.age}}
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Gender:" prop="parseExtraData">
+      <ngx-datatable-column name="Gender:" prop="parseExtraData"> 
         <ng-template let-value="value" ngx-datatable-cell-template>
-          {{value.gender}}
+          <div [ngSwitch]="value?.gender">
+           <div *ngSwitchCase ="0">Male</div>
+           <div *ngSwitchCase ="1">Female</div>
+           <div *ngSwitDefault>Others</div>
+          </div>
         </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column name="Assessment:" prop="assessment">
@@ -65,7 +59,7 @@
           {{value}}
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Site:" prop="parseExtraData">
+      <ngx-datatable-column name="Site:" prop="parseExtraData" *ngIf="this.encounterBucket =='waitingroom'">
         <ng-template let-value="value" ngx-datatable-cell-template>
           {{value.ClinicName}}
         </ng-template>
@@ -75,8 +69,33 @@
           {{getDateValue(value)}}
         </ng-template>
       </ngx-datatable-column>
+      <ngx-datatable-column name="Status:" prop="status" *ngIf="this.encounterBucket ==='asynchronous'|| this.encounterBucket =='callback'">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <div [ngSwitch]="value">
+            <div *ngSwitchCase="0">Pending Review</div>
+            <div *ngSwitchCase="1">In Review</div>
+            <div *ngSwitchCase="2">Processed</div>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+       <ngx-datatable-column name="scheduled:" prop="" *ngIf="this.encounterBucket =='scheduled'">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Action:" prop="" *ngIf="this.encounterBucket =='scheduled'">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Marked-follow up:" prop="" *ngIf="this.encounterBucket =='followup'">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value}}
+        </ng-template>
+      </ngx-datatable-column> 
+      <ngx-datatable-column name="Completed:" prop="Processed" *ngIf="this.encounterBucket =='completed'">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{getDateValue(value)}}       
+         </ng-template>
+      </ngx-datatable-column>
     </ngx-datatable>
-    <!-- </div> -->
-    <router-outlet></router-outlet>
-  </nb-card-body>
-</nb-card>

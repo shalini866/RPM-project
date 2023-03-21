@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { AfterViewChecked, OnInit } from '@angular/core';
+import { OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { AuthService } from 'src/app/shared/shared/service/auth.service';
 import { ClinicService } from 'src/app/shared/shared/service/clinic.service';
-import { Router, } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 
@@ -12,115 +12,181 @@ import { Router, } from '@angular/router';
   templateUrl: './encounter.component.html',
   styleUrls: ['./encounter.component.scss']
 })
-export class EncounterComponent {
+export class EncounterComponent implements OnInit {
   profile: any;
   rows: any;
-  encounterlist: any[] = [];
-  variable: any;
-  statusdetails: any[] =[];
- 
+  encounterlist: any;
+  statusdetails: any;
+  type: any
+  finaldate: { fromdatesss: number, toDatesss: number } = {
+    fromdatesss: 0,
+    toDatesss: 0
+  }
+  encounterBucket: any;
+  noOfDays: any;
+  dateValue = moment(new Date()).format('YYYY-MM-DD')
 
   constructor(
     private clinicService: ClinicService,
     private authService: AuthService,
-    private routing: Router,
-
-  ) { }
-  ngOnInit() {
+    private routing: ActivatedRoute,
+    private route: Router,
+  ) {
     this.profile = this.authService.profile;
-    console.log('the given profile', this.profile);
-    // this.getstatslist()
-  }
-  // getstatslist() {
-  //   const payload = {
-  //     "clinicID": this.profile.clinicID,
-  //     "providerID": "",
-  //     "types":
-  //       [{
-  //         "type": 6,
-  //         "providerOnly": false,
-  //         "status": [0, 1, 4]
-  //       },
-  //       {
-  //         "type": 0,
-  //         "providerOnly": false,
-  //         "status": [0, 1]
-  //       },
-  //       {
-  //         "type": 3,
-  //         "providerOnly": false,
-  //         "status": [0, 1]
-  //       },
-  //       {
-  //         "type": 4,
-  //         "providerOnly": true,
-  //         "status": [7]
-  //       },
-  //       {
-  //         "type": 7,
-  //         "providerOnly": true,
-  //         "status": [2]
-  //       },
-  //       {
-  //         "type": 1,
-  //         "providerOnly": true,
-  //         "status": [0, 1, 4]
-  //       }],
-  //     "userID": ""
-  //   }
-  //   this.clinicService.getStarts(payload).subscribe((res: any) => {
-  //     this.statusdetails = res.types;
-  //     console.log('the given statusdetails',this.statusdetails);
-  //   }, (err: any) => {
-  //     console.log('API ERROR');
-  //   })
-  //   this.encounterslist()
-  // }
-  
-  // getStatsNub(type:any) {
-  //   let count = '0';
-  //   (this.statusdetails ).map((status: any) => {
-  //     if (status.type === type) {
-  //       count = status.count.toString();
-  //     }
-  //   });
-  //   return count;
-  // }
-  
-
-  encounterslist(){
-     const data={
-    "clinicID":this.profile.clinicID,
-    "name":"",
-    "pageNumber":1,
-    "pageSize":25,
-    "providerID":this.profile.userName,
-    "userID":this.profile.userID,
-    "providerOnly":false,
-    "sortBy":0,
-    "status":[0,1,4],
-    "type":6}
-  this.clinicService.encountersList(data).subscribe((data:any)=>{
-    console.log('checking of the value in encounterlist ', new Date());
-    this.rows=data.encounterList;
-    console.log('the value in the given encounterdata',this.rows);
-    this.encounterlist = this.rows.map((rows:any)=>{
-      try{
-        rows.parseExtraData =JSON.parse(rows?.extraData)
-        console.log('checking ths row list',rows.parseExtraData );
-        this.variable = rows.parseExtraData 
-      } catch(e){
-        rows.parseExtraData ={};
+    this.routing.params.subscribe((data: any) => {
+      console.log('%%%%%%', data);
+      this.encounterBucket = data.buckets;
+      if (this.encounterBucket === 'scheduled') {
+        this.getdate(1);
+      } else {
+        this.bucket(this.encounterBucket)
       }
-      this.variable.gender = rows?.extraData?.gender === 0 ? 'Male' : rows?.extraData?.gender === 1 ? 'Female' : 'Other';
-
-      return rows;
     })
-  })
   }
-  getDateValue(value: any,) {
-    const date = moment(value).format('DD/MM/YYYY hh:m A')
-    return date;
+  ngOnInit() {
+    // console.log('the given profile', this.profile);
+    // this.bucket(this.encounterBucket)  
   }
 
+
+  getdate(events: any) {
+    let fromdate = moment().valueOf();
+    let todate = moment().valueOf();
+    this.noOfDays = events;
+    if (events == 1) {
+      fromdate = moment().startOf('day').valueOf();
+      todate = moment().endOf('day').valueOf();
+    } else if (events == 7) {
+      fromdate = moment().startOf('isoWeek').valueOf();
+      todate = moment().endOf('isoWeek').valueOf();
+    } else if (events == 31) {
+      fromdate = moment().startOf('month').valueOf();
+      todate = moment().endOf('month').valueOf();
+    }
+    this.finaldate = {
+      fromdatesss: new Date(fromdate).getTime(),
+      toDatesss: new Date(todate).getTime(),
+    }
+    if (events === -1) {
+      this.dateValue = moment(this.dateValue).subtract(1, 'days').format('YYYY/MM/DD');
+    } else if (events === 1) {
+      this.dateValue = moment(this.dateValue).add(1, 'days').format('YYYY/MM/DD');
+    } else {
+      this.dateValue = moment(new Date()).format('YYYY/MM/DD');
+    }
+    this.bucket('scheduled')
+  }
+  bucket(type: any) {
+    let payload: any = {
+      "clinicID": this.profile.clinicID,
+      "providerID": this.profile.userName,
+      "userID": this.profile.userID,
+      "pageNumber": 1,
+      "name": "",
+      "pageSize": 25,
+    }
+    switch (type) {
+      case 6:
+      case 'waitingroom':
+        payload = {
+          ...payload,
+          "providerOnly": false,
+          "sortBy": 0,
+          "status": [0, 1, 4],
+          "type": 6
+        }
+        break;
+      case 1:
+      case 'scheduled':
+        payload = {
+          ...payload,
+          "providerOnly": true,
+          "sortBy": 3,
+          "status": [0, 1, 4],
+          "type": 1,
+          "sortDirection": 0,
+          "start": this.finaldate.fromdatesss,
+          "end": this.finaldate.toDatesss
+        }
+        break;
+      case 0:
+      case 'asynchronous':
+        payload = {
+          ...payload,
+          "providerOnly": false,
+          "sortBy": 0,
+          "sortDirection": 0,
+          "status": [0, 1],
+          "type": 0
+        }
+        break;
+      case 3:
+      case 'callback':
+        payload =
+        {
+          ...payload,
+          "providerOnly": false,
+          "sortBy": 0,
+          "status": [0, 1],
+          "type": 3,
+          "sortDirection": 0
+        }
+        break;
+      case -2:
+      case 'followup':
+        payload =
+
+        {
+          ...payload,
+          "providerOnly": true,
+          "sortBy": 0,
+          "status": [7],
+          "type": -2,
+          "sortDirection": 1
+        }
+        break;
+      case 2:
+      case 'completed':
+        payload = {
+          ...payload,
+          "providerOnly": true,
+          "sortBy": 0,
+          "status": [2],
+          "type": -2,
+          "sortDirection": 1
+        }
+        break;
+    }
+    this.clinicService.encountersList(payload).subscribe((res: any) => {
+      console.log('checking of the value in encounterlist ', res);
+      this.rows = res.encounterList;
+      // console.log('the value in the given encounterdata',this.rows);
+      this.encounterlist = this.rows.map((rows: any) => {
+        try {
+          rows.parseExtraData = JSON.parse(rows?.extraData)
+          console.log('checking ths row list', rows.parseExtraData);
+        } catch (e) {
+          rows.parseExtraData = rows.extraData;
+        }
+        return rows;
+      })
+    })
+
+  }
+
+  getDateValue(values: any) {
+    let dateTime;
+    if (values == "" || values == 'invalid date') {
+      dateTime = "-";
+    } else if (values) {
+      dateTime = moment(values).format('DD/MM/YYYY hh:mm A');
+    }
+    return dateTime
+  }
+  onActivate(event: any) {
+    if (event.type === 'click') {
+      this.route.navigate(['profile', this.profile.userID, 'encounter', event.row.encounterID])
+    }
+  }
 }
+

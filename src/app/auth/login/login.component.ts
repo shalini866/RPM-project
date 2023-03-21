@@ -19,7 +19,9 @@ export class LoginComponent implements OnInit{
 
 
 
-   constructor( public routing:Router, private authService:AuthService){ 
+   constructor(
+     public routing:Router,
+     private authService:AuthService){ 
     console.log('constructor called')
 
    }

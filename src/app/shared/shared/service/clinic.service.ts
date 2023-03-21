@@ -8,12 +8,13 @@ import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
   providedIn: 'root'
 })
 export class ClinicService {
+  endpoint: string | any;
  
 
   constructor(
     private http:HttpClient,
-  ) { }
-
+  ) { } 
+ 
   getvitals(){
     return [
       {
@@ -131,7 +132,16 @@ export class ClinicService {
   getStarts(payload:any):Observable<any>{
     return this.http.post(`Encounters/GetStats`,payload)
   }
-  encountersList(data:any):Observable<any>{
-    return this.http.post(`Encounters/List/Encounters`,data)
+  encountersList(payload:any):Observable<any>{
+    return this.http.post(`Encounters/List/Encounters`,payload)
+  }
+  encountersIframe(payload:any):Observable<any>{ 
+    return this.http.get(`Encounters/Encounter/${payload.userID}/${payload.encounterID}`)
   }
 }
+
+
+
+
+
+
