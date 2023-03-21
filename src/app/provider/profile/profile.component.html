@@ -31,7 +31,7 @@
                       <input nbInput fullWidth class="mb-3" type="search" placeholder="Provider"><br>
 
                       <nb-select fullWidth class="mb-3" placeholder="Care Manager" [(ngModel)]="selectedlist">
-                        <nb-option *ngFor="let user of userslist" [value]="user.providerID">
+                        <nb-option *ngFor="let user of userslist" [value]="user.providerID"> 
                           {{ user.name }}
                         </nb-option>
                       </nb-select> <br>
@@ -255,35 +255,6 @@
             </div>
           </nb-card-body>
         </nb-card>
-        <!-- </div> -->
-
-        <!-- Column 3: second column -->
-        <!-- <div class="col-md-12 p-0"> -->
-        <!-- <div> -->
-        <!-- <nb-tabset (changeTab)="onChangeTab($event)">
-            <nb-tab class="p-0" tabTitle="SNAPSHOTS" responsive>
-              <app-snapshot [getsnapshotdetails]="profile"></app-snapshot> 
-           </nb-tab>
-           <nb-tab class="p-0" tabTitle="VITALS" responsive>
-             <app-vitals></app-vitals> 
-           </nb-tab>
-           <nb-tab class="p-0" tabTitle="ALERTS" responsive>
-             <div *ngIf="profile" (click)="getalertslist(this.profile)"></div>
-              <app-alerts [getProfileDetails]="profile"></app-alerts> 
-           </nb-tab>
-           <nb-tab class="p-0" tabTitle="ASSESSMENTS" responsive>
-              <app-assessment [getassessmentDetails]="profile"></app-assessment>  
-           </nb-tab>
-           <nb-tab class="p-0" tabTitle="DOCUMENTS" responsive>
-              <app-documents [getdocumentsDetails]="profile"></app-documents> 
-           </nb-tab>
-           <nb-tab class="p-0" tabTitle="HISTORY" responsive>
-              <app-history [gethistoryDetails]="profile"></app-history>
-            </nb-tab>
-           <nb-tab class="p-0" tabTitle="TASKS" responsive>
-              <app-task [gettaskdetails]="profile"></app-task> 
-           </nb-tab>
-          </nb-tabset> -->
 
 
 

@@ -24,5 +24,5 @@ export class AuthService {
   search(payload: any): Observable<any> {
     return this.http.post(`Clinics/SearchPatients2`, payload)
   }
-}
+} 
 

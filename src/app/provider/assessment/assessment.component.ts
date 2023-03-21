@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { CareMangerService } from 'src/app/shared/shared/service/care-manger.service';
 
@@ -7,30 +7,33 @@ import { CareMangerService } from 'src/app/shared/shared/service/care-manger.ser
   templateUrl: './assessment.component.html',
   styleUrls: ['./assessment.component.scss']
 })
-export class AssessmentComponent {
+export class AssessmentComponent implements OnInit {
   profile: any;
   id: any;
   rows:any
 
-  @Input() 
-  get getassessmentDetails(){
-    return this.profile
-  }
-  set getassessmentDetails(value: any){
-    if(value){
-      this.profile = value
-      console.log('this is the assessment component details', this.profile);
-      // const id = this.profile
-      // console.log('check  the patientidffrghbddd ',id);
+  // @Input() 
+  // get getassessmentDetails(){
+  //   return this.profile
+  // }
+  // set getassessmentDetails(value: any){
+  //   if(value){
+  //     this.profile = value
+  //     console.log('this is the assessment component details', this.profile);
+  //     // const id = this.profile
+  //     // console.log('check  the patientidffrghbddd ',id);
       
-    }
-  }
+  //   }
+  // }
 
   constructor(
     private careService : CareMangerService,
 
   ){
 
+  }
+  ngOnInit(): void {
+    this.assesslist()
   }
   assesslist(){
     // const idd = this.profile

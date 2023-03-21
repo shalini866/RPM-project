@@ -6,6 +6,11 @@ import { IndexComponent } from './index/index.component';
 import { EncounterComponent } from '../encounters/encounter/encounter.component';
 import { SnapshotComponent } from './snapshot/snapshot.component';
 import { VitalsComponent } from './vitals/vitals.component';
+import { AlertsComponent } from './alerts/alerts.component';
+import { AssessmentComponent } from './assessment/assessment.component';
+import { DocumentsComponent } from './documents/documents.component';
+import { HistoryComponent } from './history/history.component';
+import { TaskComponent } from './task/task.component';
 
 
 const routes: Routes = [
@@ -26,6 +31,21 @@ const routes: Routes = [
           }, {
             path: ':patientId/vitals',
             component: VitalsComponent,
+          },{
+            path: ':patientId/alerts',
+            component: AlertsComponent,
+          },{
+            path: ':patientId/assessment',
+            component: AssessmentComponent,
+          },{
+            path: ':patientId/documents',
+            component:DocumentsComponent,
+          },{
+            path: ':patientId/history',
+            component:HistoryComponent,
+          },{
+            path: ':patientId/task',
+            component:TaskComponent,
           }
         ]
       },

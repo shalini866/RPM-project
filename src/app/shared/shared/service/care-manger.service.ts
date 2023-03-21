@@ -23,17 +23,17 @@ export class CareMangerService {
   displayProfile(payload:any):Observable<any>{
     return this.http.get(`Clinics/ClinicPatient/${payload.userID}/${payload.clinicID}/${payload.patientID}`);
   }
-
-  snapshotlist(userID:any):Observable<any>{
-    return this.http.get(`Vitals/List/Top/${userID}`, { headers: this.getHeaders() })
-  }
- 
   getHeaders() {
     const userID = this.authService.profile.userID;
     let httpHeaders = new HttpHeaders();
     httpHeaders = httpHeaders.set('token', userID);
     return httpHeaders;
   }
+ 
+  snapshotlist(userID:any):Observable<any>{
+    return this.http.get(`Vitals/List/Top/${userID}`, { headers: this.getHeaders() })
+  }
+
   vitalslist(payload: any):Observable<any>{
     return this.http.post(`Vitals/Search`,payload , { headers: this.getHeaders() })
   }

@@ -10,17 +10,17 @@ import { CareMangerService } from 'src/app/shared/shared/service/care-manger.ser
 export class TaskComponent {
   profile: any;
   dateValue = moment(new Date()).format('YYYY-MM-DD');
-@Input()
-get gettaskdetails(){
-  return this.profile
-}
-set gettaskdetails(value:any){
-  if(value){
-    this.profile = value
-    const id=this.profile.patientID
-    console.log('this is task patientid',id);
-  }
-}
+// @Input()
+// get gettaskdetails(){
+//   return this.profile
+// }
+// set gettaskdetails(value:any){
+//   if(value){
+//     this.profile = value
+//     const id=this.profile.patientID
+//     console.log('this is task patientid',id);
+//   }
+// }
   
   constructor(       
     private careService:CareMangerService

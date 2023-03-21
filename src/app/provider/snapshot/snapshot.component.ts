@@ -53,7 +53,7 @@ export class SnapshotComponent implements OnInit {
     }
   
     ngOnInit(): void {
-
+    
 
       // this.aranageVitals
     }

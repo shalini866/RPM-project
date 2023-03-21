@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/shared/service/auth.service';
 import { ClinicService } from 'src/app/shared/shared/service/clinic.service';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -20,7 +21,8 @@ export class EncounterdetailsComponent implements OnInit {
     private clinicService: ClinicService,
     private authService: AuthService,
     private routing: ActivatedRoute,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    private location: Location
   ) {
     this.profile = this.authService.profile;
     this.routing.params.subscribe(params => {
@@ -48,6 +50,9 @@ export class EncounterdetailsComponent implements OnInit {
     }, (error) => {
       console.log('error exeption');
     });
+  }
+  goback(){
+    this.location.back();
   }
   }
 

@@ -17,4 +17,4 @@ export class ProfileResolver implements Resolve<boolean> {
     console.log('route', route)
     return this.authservice.getProfiles(route.params['userId']);
   }
-}
+} 

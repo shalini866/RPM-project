@@ -14,7 +14,7 @@ const routes: Routes = [
     path: 'profile/:userId',
     component: ProfileComponent,
     resolve: {
-      profileData: ProfileResolver
+      profileData: ProfileResolver 
     }
   },
 ];
