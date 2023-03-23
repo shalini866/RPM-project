@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileResolver } from '../shared/resolver/profile.resolver';
 import { IndexComponent } from './index/index.component';
-import { EncounterComponent } from '../encounters/encounter/encounter.component';
 import { SnapshotComponent } from './snapshot/snapshot.component';
 import { VitalsComponent } from './vitals/vitals.component';
 import { AlertsComponent } from './alerts/alerts.component';
@@ -11,6 +10,8 @@ import { AssessmentComponent } from './assessment/assessment.component';
 import { DocumentsComponent } from './documents/documents.component';
 import { HistoryComponent } from './history/history.component';
 import { TaskComponent } from './task/task.component';
+import { AuthGuard } from '../guards/auth.guard';
+import { PatientComponent } from './patient/patient.component';
 
 
 const routes: Routes = [
@@ -24,6 +25,8 @@ const routes: Routes = [
         resolve: {
           profileData: ProfileResolver
         },
+     canActivate: [AuthGuard],
+
         children: [
           {
             path: ':patientId/snapshot',
@@ -35,7 +38,7 @@ const routes: Routes = [
             path: ':patientId/alerts',
             component: AlertsComponent,
           },{
-            path: ':patientId/assessment',
+            path: ':patientId/assessments',
             component: AssessmentComponent,
           },{
             path: ':patientId/documents',
@@ -49,7 +52,7 @@ const routes: Routes = [
           }
         ]
       },
-      {
+      { 
         path: ':userId/encounters',
         loadChildren: () => import('../encounters/encounters.module').then(m => m.EncountersModule),
         resolve: {
@@ -63,6 +66,13 @@ const routes: Routes = [
           profileData: ProfileResolver
         }
       },
+      {
+        path:':userId/patient',
+        component:PatientComponent,
+        resolve: {
+          profileData: ProfileResolver
+        }
+      }
     ]
   }
 

@@ -6,19 +6,27 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
+ 
   get: any;
   profile: any;
 
+  isLoggedIn(){
+    !!sessionStorage.getItem('token')
+  }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { } 
+
+
   login(payload: any): Observable<any> {
     return this.http.post(`Email/SignIn`, payload)
   }
-  getProfiles(id: any): Observable<any> {
-    return this.http.get(`Profile/${id}`).pipe(
+  getProfiles(userId: any): Observable<any> {
+    return this.http.get(`Profile/${userId}`).pipe(
       tap((res: any) => {
         this.profile = res;
-      })
+        console.log('DFCVGHBJN************',res);
+        
+      }) 
     )
   }
   search(payload: any): Observable<any> {

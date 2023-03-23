@@ -1,8 +1,8 @@
 <nb-layout>
     <nb-layout-header fixed>
         <nb-icon icon="menu-2-outline"(click)="toggle()"></nb-icon>
-        <!-- <nb-icon icon="menu-2-outline"(click)="sidebarlist()"></nb-icon> -->
         <nb-user size="large" class="m-3" [picture]="profile?.imageURL" name="{{profile?.firstName}} {{profile?.lastName}}"></nb-user>
+          <!-- <nb-icon icon="power-outline"(click)="logout()"></nb-icon>  -->
       </nb-layout-header>
       <nb-sidebar fixed state="expanded">
         <nb-menu [items]="items"></nb-menu>

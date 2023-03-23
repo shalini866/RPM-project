@@ -45,23 +45,24 @@ export class SnapshotComponent implements OnInit {
       private cd: ChangeDetectorRef,
       private activate: ActivatedRoute,
     ){
+      this.profile = this.authService.profile;
       this.activate.queryParamMap.subscribe((queryparam: any) => {
         this.patientUserId = activate.snapshot.queryParams['patientUserId']
+        console.log('checking the patientuserid in queryparam ^^^^^^***',this.patientUserId);
         this.getSnapshot()
       })
-      this.vitalList = this.clinicservice.getvitals();
+      this.vitalList = this.clinicservice.getvitals(); 
     }
   
     ngOnInit(): void {
     
-
-      // this.aranageVitals
     }
   
     getSnapshot(){
-      this.careService.snapshotlist(this.patientUserId).subscribe((res:any)=>{
+      console.log('the snapshot patientuserid %%%%%%%%%%%',this.patientUserId);
+      this.careService.snapshotlist(this.patientUserId).subscribe((res:any)=>{ 
         console.log('snapshot list',res);
-        this.patientVitalList = res.vitalsList;
+        this.patientVitalList = res.vitalsList; 
         console.log('this is patientVitallist', this.patientVitalList);
         const patientVitalList = this.patientVitalList.map((list: any) => {
           const vitalName = this.vitalList.find((datas: any) => {

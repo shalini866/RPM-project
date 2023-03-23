@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
+import { AuthService } from 'src/app/shared/shared/service/auth.service';
 import { CareMangerService } from 'src/app/shared/shared/service/care-manger.service';
 
 @Component({
-  selector: 'app-assessment',
+  selector: 'app-assessment', 
   templateUrl: './assessment.component.html',
   styleUrls: ['./assessment.component.scss']
 })
@@ -11,7 +13,8 @@ export class AssessmentComponent implements OnInit {
   profile: any;
   id: any;
   rows:any
-
+  patientUserId: any;
+  patientId: any;
   // @Input() 
   // get getassessmentDetails(){
   //   return this.profile
@@ -28,20 +31,26 @@ export class AssessmentComponent implements OnInit {
 
   constructor(
     private careService : CareMangerService,
-
+    private auth: AuthService,
+     private activate: ActivatedRoute,
   ){
-
+    this.activate.paramMap.subscribe((queryparam)=>{
+      this.patientId = activate.snapshot.params['patientId']
+      this.patientUserId = activate.snapshot.queryParams['patientUserId']
+        console.log('checking the patientuserid in queryparam ^^^^^^***',this.patientUserId);
+        this.assesslist()
+     })
   }
   ngOnInit(): void {
-    this.assesslist()
+    // this.assesslist()
   }
   assesslist(){
     // const idd = this.profile
     // console.log('the value in the assesment ',id);
     const payload ={
-    "clinicID": this.profile.clinicID,
-    "userID":    this.profile.userID,
-    "patientID":this.profile.patientID
+    "clinicID": this.auth.profile.clinicID,
+    "userID":    this.patientUserId,
+    "patientID": this.patientId
   }
    this.careService.assessmentlist(payload).subscribe((res:any)=>{
     console.log('this is assessment',res);

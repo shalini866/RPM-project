@@ -6,11 +6,14 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AuthService } from '../shared/service/auth.service';
 
 @Injectable()
 export class HTTPInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor(
+    private authService: AuthService,
+  ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let path = '/ivisit.ComV5.00/resources';

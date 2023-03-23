@@ -9,8 +9,11 @@ import { CareMangerService } from 'src/app/shared/shared/service/care-manger.ser
 })
 export class AlertsNotesComponent implements OnInit {
   alertsDataList: any
- constructor(private dialogService: NbDialogService, public dialog: NbDialogRef<AlertsNotesComponent>, 
-  private careService: CareMangerService,){}
+ constructor(private dialogService: NbDialogService,
+ public dialog: NbDialogRef<AlertsNotesComponent>, 
+  private careService: CareMangerService,
+  
+  ){}
   ngOnInit(): void {
     console.log('checking', this.alertData);
     this.viewNotes();

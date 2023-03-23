@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { CareMangerService } from 'src/app/shared/shared/service/care-manger.service';
 
@@ -10,6 +11,7 @@ import { CareMangerService } from 'src/app/shared/shared/service/care-manger.ser
 export class TaskComponent {
   profile: any;
   dateValue = moment(new Date()).format('YYYY-MM-DD');
+  patientUserId: any;
 // @Input()
 // get gettaskdetails(){
 //   return this.profile
@@ -23,8 +25,15 @@ export class TaskComponent {
 // }
   
   constructor(       
-    private careService:CareMangerService
-  ){}
+    private careService:CareMangerService,
+    private activate: ActivatedRoute,
+  ){
+    this.activate.queryParamMap.subscribe((queryparam: any) => {
+      this.patientUserId = activate.snapshot.queryParams['patientUserId']
+      console.log('checking the patientuserid in queryparam ^^^^^^***',this.patientUserId);
+      this.gettasklist()
+    })
+  }
  
   gettasklist(type?: any){
     if (type === -1) {
@@ -36,7 +45,7 @@ export class TaskComponent {
     }
     const data={
     "byUsername":"",
-    "forUsername":this.profile.patientID,
+    "forUsername":this.profile.patientUserId,
     "date": this.dateValue,
   }
     
@@ -46,7 +55,7 @@ export class TaskComponent {
     })
 
     const payload={
-      "completedBy":this.profile.patientID,
+      "completedBy":this.profile.patientUserId,
       "assignedDateFrom":moment(new Date()).format('YYYY-MM-DD'),
       "assignedDateTo":moment(new Date()).format('YYYY-MM-DD'),
       "page":1,

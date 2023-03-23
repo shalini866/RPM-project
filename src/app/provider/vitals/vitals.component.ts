@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Chart } from 'chart.js';
 import * as moment from 'moment';
 import { CareMangerService } from 'src/app/shared/shared/service/care-manger.service';
@@ -11,6 +12,7 @@ import { CareMangerService } from 'src/app/shared/shared/service/care-manger.ser
 export class VitalsComponent implements OnInit , AfterViewInit {
   noOfDays = -1;
   vitalslist: any;
+  profile:any
   selectedDateRange = {
     start: new Date('1900-02-01'),
     end: new Date()
@@ -20,12 +22,19 @@ export class VitalsComponent implements OnInit , AfterViewInit {
   ctx: any;
 
   @ViewChild('mychart') mychart:any
+  patientUserName: any;
   constructor(
     private careService: CareMangerService,
-  ) {}
+    private activate: ActivatedRoute,
+  ) {
+    this.activate.paramMap.subscribe((queryparam: any) => {
+      this.patientUserName = activate.snapshot.params['patientId']
+      console.log('checking the patientuserid in queryparam ^^^^^^***',this.patientUserName);
+      this.getList(-1)
+    }) 
+  }
  
   ngOnInit(): void {
-    this.getList(-1)
   }
   ngAfterViewInit() {
     this.canvas = this.mychart.nativeElement as HTMLCanvasElement; 
@@ -58,7 +67,6 @@ export class VitalsComponent implements OnInit , AfterViewInit {
   }
   
   getvitalsList(){
-    console.log("checking the getvitallist",this.getvitalsList);
     const fromDates = new Date(this.selectedDateRange.start).getTime();
     const toDates = new Date(this.selectedDateRange.end).getTime();
       const payload =
@@ -66,10 +74,10 @@ export class VitalsComponent implements OnInit , AfterViewInit {
         "vitalTypeID":20,
         startDate: moment(fromDates).format('YYYY-MM-DD'),
         endDate: moment(toDates).format('YYYY-MM-DD'),
-        "username":"dasfdasf2344"
+        "username": this.patientUserName
       }
       this.careService.vitalslist(payload).subscribe((data: any) => {
-        console.log("the given lis offf", data);
+        console.log("the given list offf vitals", data);
         
       })
 

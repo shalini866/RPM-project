@@ -1,0 +1,77 @@
+<nb-card class="sidegap">
+    <nb-card-header>
+        <h1>Patients</h1>
+    </nb-card-header>
+    <nb-card-body>
+        <nb-tabset fullWidth>
+            <nb-tab tabTitle="DEMOGRAPHICS">
+            </nb-tab>
+            <nb-tab tabTitle="ACTIVITY">
+            </nb-tab>
+         </nb-tabset>
+         <div class="d-flex">
+            <input nbInput type="search" placeholder="search" >
+            <nb-icon icon="funnel-outline" class=" mx-1"></nb-icon>
+            <button nbButton outline status="primary" class="ms-2" (click)="getpatient()">CEARTE NEW PATIENT</button>
+         </div>
+          
+  <ngx-datatable class="material h-100 pt-4 " [rows]="" columnMode="force" [headerHeight]="50" [footerHeight]="0"
+  [rowHeight]="50" [scrollbarV]="true" > 
+  <ngx-datatable-column name=" Name: " prop="parseExtraData" [flexGrow]="3">
+    <ng-template let-value="value" ngx-datatable-cell-template>
+
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Age:" prop="parseExtraData" >
+    <ng-template let-value="value" ngx-datatable-cell-template>
+
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Gender:" prop="parseExtraData"> 
+    <ng-template let-value="value" ngx-datatable-cell-template>
+      
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Assessment:" prop="assessment">
+    <ng-template let-value="value" ngx-datatable-cell-template>
+   
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Site:" prop="parseExtraData" >
+    <ng-template let-value="value" ngx-datatable-cell-template>
+
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Reported:" prop="created">
+    <ng-template let-value="value" ngx-datatable-cell-template>
+
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Status:" prop="status">
+    <ng-template let-value="value" ngx-datatable-cell-template>
+   
+    </ng-template>
+  </ngx-datatable-column>
+   <ngx-datatable-column name="scheduled:" prop="" >
+    <ng-template let-value="value" ngx-datatable-cell-template>
+
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Action:" prop="" >
+    <ng-template let-value="value" ngx-datatable-cell-template>
+
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Marked-follow up:" prop="" >
+    <ng-template let-value="value" ngx-datatable-cell-template>
+        
+    </ng-template>
+  </ngx-datatable-column> 
+  <ngx-datatable-column name="Completed:" prop="Processed">
+    <ng-template let-value="value" ngx-datatable-cell-template>
+
+     </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>
+    </nb-card-body>
+</nb-card>

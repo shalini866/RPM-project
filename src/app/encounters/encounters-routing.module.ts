@@ -1,5 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '../guards/auth.guard';
 import { EncounterComponent } from './encounter/encounter.component';
 import { IndexComponent } from './index/index.component';
 
@@ -9,6 +10,8 @@ const routes: Routes = [
   {
     path: 'encounter',
     component: IndexComponent,
+     canActivate: [AuthGuard],
+
     children: [
 
       {

@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { AuthService } from 'src/app/shared/shared/service/auth.service';
 import { CareMangerService } from 'src/app/shared/shared/service/care-manger.service';
@@ -11,6 +12,8 @@ import { CareMangerService } from 'src/app/shared/shared/service/care-manger.ser
 export class HistoryComponent {
   profile: any;
   rows: any;
+  patientUserId: any;
+  patientId: any;
   // @Input() 
   // get gethistoryDetails(){
   //   return this.profile
@@ -26,10 +29,19 @@ export class HistoryComponent {
   // }
   constructor(
     private careService:CareMangerService,
-    private authSerivce:AuthService
-  ){}
+    private authSerivce:AuthService,
+    private activate: ActivatedRoute,
+  ){
+    this.activate.queryParamMap.subscribe((queryparam: any) => {
+       this.patientId = activate.snapshot.params['patientId']
+       console.log('checking the history patientid',this.patientId)
+      this.patientUserId = activate.snapshot.queryParams['patientUserId']
+      console.log('checking the patientuserid in queryparam ^^^^^^***',this.patientUserId);
+      this.gethistorylist()
+    })
+  }
   gethistorylist(){
-    this.careService.historylist(this.profile).subscribe((res:any)=>{
+    this.careService.historylist(this.patientUserId).subscribe((res:any)=>{
       console.log('this is historylist',res);
       this.rows = res.list
       console.log('checking the date & time ',this.rows);

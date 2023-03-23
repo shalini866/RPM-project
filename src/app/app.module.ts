@@ -44,6 +44,6 @@ import { HTTPInterceptor } from './shared/interceptor/http.interceptor';
       multi: true,
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

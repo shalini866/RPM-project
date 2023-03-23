@@ -33,7 +33,7 @@ export class DocumentsComponent  implements OnInit{
   getdocumentlist(){
     const payload ={
     }
-    this.careService.documentlist(this.profile).subscribe((res:any) =>{
+    this.careService.documentlist(payload).subscribe((res:any) =>{
       console.log('this is documentlist',res);
     })
   }

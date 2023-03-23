@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NbDialogService } from '@nebular/theme';
 import * as moment from 'moment';
 import { CareMangerService } from 'src/app/shared/shared/service/care-manger.service';
@@ -11,7 +12,8 @@ import { AlertsNotesComponent } from './alerts-notes/alerts-notes.component';
 })
 export class AlertsComponent implements OnInit {
   profile: any;
-    rows: any;
+  rows: any;
+  patientUserName: any;
   // @Input() 
   // get getProfileDetails(){
   //   return this.profile
@@ -28,15 +30,24 @@ export class AlertsComponent implements OnInit {
   constructor(
     private careService : CareMangerService,
     private cd: ChangeDetectorRef,
-    private dialogService: NbDialogService
+    private dialogService: NbDialogService,
+    private activate:ActivatedRoute
   ){
-  
+   this.activate.paramMap.subscribe((queryparam)=>{
+
+    console.log('$$$$$$$$$$$$$$',queryparam);
+    
+    this.patientUserName = activate.snapshot.params['patientId']
+      console.log('checking the patientuserid in queryparam ^^^^^^***',this.patientUserName);
+      this.alertslist()
+   })
   }
   ngOnInit(): void {
-    this.alertslist()
+    // this.alertslist()
   }
   alertslist(){
-    this.careService.alertslist(this.profile).subscribe((res:any) =>{
+    this.careService.alertslist(this.patientUserName).subscribe((res:any) =>{
+      console.log('this.patientUserName',this.patientUserName)
       console.log('check the alertslist',res);
       this.rows =res.list
       console.log('the getAlertApi API', res);

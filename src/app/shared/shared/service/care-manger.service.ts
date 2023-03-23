@@ -21,7 +21,7 @@ export class CareMangerService {
   }
 
   displayProfile(payload:any):Observable<any>{
-    return this.http.get(`Clinics/ClinicPatient/${payload.userID}/${payload.clinicID}/${payload.patientID}`);
+    return this.http.get(`Clinics/ClinicPatient/${payload.userID}/${payload.clinicID}/${payload.patientID}`,);
   }
   getHeaders() {
     const userID = this.authService.profile.userID;
@@ -31,32 +31,36 @@ export class CareMangerService {
   }
  
   snapshotlist(userID:any):Observable<any>{
-    return this.http.get(`Vitals/List/Top/${userID}`, { headers: this.getHeaders() })
+    return this.http.get(`Vitals/List/Top/${userID}`, { headers: this.getHeaders()})
   }
 
   vitalslist(payload: any):Observable<any>{
-    return this.http.post(`Vitals/Search`,payload , { headers: this.getHeaders() })
+    return this.http.post(`Vitals/Search`,payload , { headers: this.getHeaders()})
   }
   alertslist(payload:any):Observable<any>{
-    return this.http.get(`Alerts/List/1000254/${payload.patientID}`, { headers: this.getHeaders() })
+   
+    return this.http.get(`Alerts/List/1000254/${payload}`, { headers: this.getHeaders()})
   }
   alertlistApi(id: any):Observable<any>{
-    return this.http.get(`Alerts/AlertActions/${id}`, { headers: this.getHeaders() })
+    return this.http.get(`Alerts/AlertActions/${id}`, { headers: this.getHeaders()})
   }
   assessmentlist(payload:any):Observable<any>{
+   
     return this.http.post(`Encounters/PatientEncounters`,payload)
   }
   documentlist(payload:any):Observable<any>{
-    return this.http.get(`MedicalRecords/RecordsList/${payload.userID}`)
+    console.log('paylaod',payload)
+    return this.http.get(`MedicalRecords/RecordsList/${payload}`)
   }
   historylist(payload:any):Observable<any>{
-    return this.http.get(`Audits/GetAudits/${payload.userID}/${payload.patientID}`)
+    console.log('paylaodddddd',payload)
+    return this.http.get(`Audits/GetAudits/${payload}/${payload.patientID}`)
   }
   taskstartlist(data:any):Observable<any>{
-    return this.http.post(`CarePlan/GetTaskForDate`,data,{ headers: this.getHeaders() })
+    return this.http.post(`CarePlan/GetTaskForDate`,data,{ headers: this.getHeaders()})
   }
   taskcompletelist(payload:any):Observable<any>{
-    return this.http.post(`CarePlan/GetCompletedTasks`,payload,{ headers: this.getHeaders() })
+    return this.http.post(`CarePlan/GetCompletedTasks`,payload,{ headers: this.getHeaders()})
   }
 }
  

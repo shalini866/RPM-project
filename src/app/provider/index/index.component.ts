@@ -85,5 +85,8 @@ export class IndexComponent implements OnInit, AfterViewChecked {
     this.sidebarService.toggle();
   }
 
+  // logout(){
+
+  // }
   
 }

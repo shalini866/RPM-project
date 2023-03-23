@@ -17,6 +17,7 @@ import { AssessmentComponent } from './assessment/assessment.component';
 import { DocumentsComponent } from './documents/documents.component';
 import { HistoryComponent } from './history/history.component';
 import { TaskComponent } from './task/task.component';
+import { PatientComponent } from './patient/patient.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { TaskComponent } from './task/task.component';
     DocumentsComponent,
     HistoryComponent,
     TaskComponent,
+    PatientComponent,
   
      ],
   imports: [
@@ -66,6 +68,6 @@ import { TaskComponent } from './task/task.component';
     NbSidebarModule,
     NbMenuModule,
     NbRouteTabsetModule,
-  ]
+  ],
 })
 export class ProviderModule { }
