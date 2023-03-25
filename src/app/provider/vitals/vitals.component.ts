@@ -28,6 +28,7 @@ export class VitalsComponent implements OnInit , AfterViewInit {
     private activate: ActivatedRoute,
   ) {
     this.activate.paramMap.subscribe((queryparam: any) => {
+      console.log('£££££$$$',queryparam);
       this.patientUserName = activate.snapshot.params['patientId']
       console.log('checking the patientuserid in queryparam ^^^^^^***',this.patientUserName);
       this.getList(-1)

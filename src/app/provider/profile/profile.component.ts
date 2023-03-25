@@ -38,6 +38,8 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
   vitalList: any;
   patientVitalList: any = [];
   vitalsOriginal: any[] = [];
+  patientId: any;
+  patientUserId: any
  
   tabs: NbRouteTab[] = [
     {
@@ -69,13 +71,28 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
     private careService : CareMangerService,
     private clinicservice: ClinicService,
     private activatedroute: ActivatedRoute,
-    private router: Router,) 
+    private router: Router,
+    private activate: ActivatedRoute,
+    ) 
     {
       console.log('this is activatedRoute', activatedroute.snapshot.data['profileData']);
     this.vitalList = this.clinicservice.getvitals();
     console.log('check the vitallist data',this.vitalList);
+    
+    this.activate.paramMap.subscribe((queryparam)=>{
+      console.log('checking the param in profile',queryparam);
+      this.userId = queryparam.get('userId')
+      this.patientUserId = activate.snapshot.params['patientid']
+        console.log('checking the patientuserid in queryparam in profile',this.patientUserId);
+      this.profileList(this.patientUserId)
+     })
+  } 
 
-  }
+  route(data:any){
+    console.log('route#######',data);
+    
+    this.router.navigate([`profile`,this.userId, data.patientID])
+     }
   open(dialog: TemplateRef<any>) {
 
     this.careService.careManger().subscribe((data:any) =>{
@@ -119,7 +136,7 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
   }
   refreshclick(){
     window.location.reload();
-  }
+  } 
 
   valuechange(value: any){
     console.log('valuechange', value);
@@ -158,13 +175,11 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
   searchPatient(search?: any) {
     // console.log('the selectedGender value',this.selectedGender);
     // console.log('the patientSearch', this.patientSearch);
-    console.log('the value in the input field',this.Firstname);
+    // console.log('the value in the input field',this.Firstname);
   //  console.log('the value in the lastname input field',this.Lastname);
-   console.log("checking the value of ", this.selectedlist);
-   
-
+  //  console.log("checking the value of ", this.selectedlist);
     const payload = {
-      "userID": this.authService.profile.userID,
+      "userID": this.userId,
       "clinicID": this.authService.profile.clinicID,
       "firstName": "",
       "lastName": "",
@@ -174,11 +189,12 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
       "count": 25, 
       "monitored": -1,
       "morbidity": -1,
-      "providerID": '',
+      "providerID": '', 
       "alarm": -1,
       "careManagerID": this.selectedlist,
       "term": this.patientSearch
     };
+    console.log('checking the payload in searchpatient',this.userId);
     if(!!search){
       console.log('this.selectedGender--',this.selectedGender);
       payload.gender = this.selectedGender;
@@ -190,9 +206,8 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
    
     this.authService.search(payload).subscribe((data: any) => {
       if (!this.profile) {
-        this.profileList(data.clinicPatientList[0])
-      }
-      console.log('data', data.clinicPatientList);
+        // this.profileList(data.clinicPatientList[0])
+      } 
       this.searchUser = data.clinicPatientList
       console.log('value in the data.clinicPatientList', data.clinicPatientList);
     })
@@ -204,151 +219,25 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
     console.log('checkinggg%%%%%%',event.patientID);
     const payload ={
    
-      userID : this.authService.profile.userID, 
-      patientID : event.patientID ,
+      userID : this.userId, 
+      patientID :this.patientUserId  ,
       clinicID : "1000254" ,
     }
     this.careService.displayProfile(payload).subscribe((res:any) =>{
       this.profile = res;
       console.log('$$$$$$$$$$$$$$$$',res);
       
-      this.router.navigate(['profile', this.authService.profile.userID, this.profile.patientID, 'snapshot'], {
+      this.router.navigate(['profile', this.userId, this.profile.patientID, 'snapshot'], {
         queryParams: {
           patientUserId: this.profile.userID,
         } 
       })
-
-      console.log('checkkkkkkkkkkk  the userid',res.userID);
-      
-    //    this.careService.snapshotlist(this.profile).subscribe((res:any)=>{
-    //     console.log('snapshot list',res);
-    //     this.patientVitalList = res.vitalsList;
-    //     console.log('this is patientVitallist', this.patientVitalList);
-    //     const patientVitalList = this.patientVitalList.map((list: any) => {
-    //       const vitalName = this.vitalList.find((datas: any) => {
-    //         if (datas.vitalType === list.vitalTypeID) {
-    //           return datas;
-    //         } else {
-    //           return '';
-    //         }
-    //       });
-    //       list.vitalName = vitalName?.name;
-    //       try {
-    //         list.vitalData = JSON.parse(list.vitalData);
-    //       } catch {
-    //         list.vitalData = {};
-    //       }
-    //       return list;
-    //     })
-    //     this.patientVitalList = patientVitalList;
-    //     this.aranageVitals()
-    // })
+      console.log('checkkkkkkkkkkk  the router navigate',this.userId);
+       
     })
    
   }
-  // getalertslist(data:any){
-  //   this.careService.alertslist(this.profile).subscribe((res:any) =>{
-  //     console.log('check the alertslist',res);
-      
-  //   })
-  // }
-  // aranageVitals() {
 
-  //   this.patientVitalList.map((list: any) => {
-  //     if (list.vitalName === "Blood Pressure") {
-  //       const payload = {
-  //         name: 'Blood Pressure',
-  //         time: list.vitalDate,
-  //         value: list.vitalData.S + '/' + list.vitalData.D + '-' + list.vitalData.R
-  //       };
-  //       this.bloodPressure = payload.value;
-  //       this.cd.detectChanges();      
-  //     }
-  //       else if(list.vitalName === "SPO2"){
-  //         const payload = {
-  //           name: 'SPO2',
-  //           value:list.vitalData.O + ' %' + ' - ' +list.vitalData.R
-  //         };
-  //         this.spo2 = payload.value;
-  //         this.cd.detectChanges();
-  //       }
-  //       else if(list.vitalName === 'Glucose'){
-  //         const payload = {
-  //           name: 'Glucose',
-  //           value: list.vitalData.V + list.vitalData.U
-  //         }
-  //         this.glucose = payload.value;
-  //         this.cd.detectChanges()
-  //       }
-  //       else if (list.vitalName === "Weight"){
-  //         const payload = {
-  //           name: 'Weight',
-  //           value: list.vitalData.W + list.vitalData.U
-  //         }
-  //         this.weight = payload.value;
-  //         this.cd.detectChanges()
-  //       }
-  //       else if(list.vitalName === 'Temperature'){
-  //         const payload = {
-  //           name: 'Temperature',
-  //           value: list.vitalData.T
-  //         }
-  //         this.temperature = payload.value;
-  //         this.cd.detectChanges()
-  //       }
-  //       else if(list.vitalName === 'ECG'){
-  //         const payload = {
-  //           name: 'ECG',
-  //           // value: list.vitalData.T
-  //         }
-  //         // this.ecg = payload.value;
-  //         this.cd.detectChanges()
-  //       }
-  //       else if(list.vitalName === "Pain Level"){
-  //         const payload = {
-  //           name: "Pain Level",
-  //           value: list.vitalData.L
-  //         }
-  //         this.painLevel = payload.value;
-  //         this.cd.detectChanges()
-  //       }
-  //       else if(list.vitalName === "Peak Flow"){
-  //         const payload = {
-  //           name: "Peak Flow",
-  //           value: list.vitalData.PEF + "- " + list.vitalData.FEV1 + " - " + list.vitalData.FVC
-  //         }
-  //         this.peakFlow = payload.value;
-  //         this.cd.detectChanges()
-  //       }
-  //       else if(list.vitalName === "Height"){
-  //         const payload = {
-  //           name: "Height",
-  //           value: list.vitalData.H
-  //         }
-  //         this.height = payload.value;
-  //         this.cd.detectChanges()
-  //       }
-  //       else if(list.vitalName === "PHQ9"){ 
-  //         const payload = {
-  //           name: "PHQ9",
-  //           value: list.vitalData.Q
-  //         }
-  //         this.phq9 = payload.value;
-  //         this.cd.detectChanges()
-  //       }
-  //   });
-  // } 
- 
-
-  // onChangeTab(event: any) {
-  //   if (event.tabTitle === 'VITALS') {
-  //   }
-  //   if (event.tabTitle === 'ALERTS') {
-  //     // if (this.profile) {
-  //     //   this.getalertslist(this.profile)
-  //     // }
-  //   }
-  // }
   tabChanged($event: any) {
     console.log($event)
     if ($event.title === 'Snapshot') {
@@ -372,7 +261,11 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
       })
     }
     else if ($event.title === 'Documents') {
-      this.router.navigate(['profile', this.authService.profile.userID, this.profile.patientID, 'documents'])
+      this.router.navigate(['profile', this.authService.profile.userID, this.profile.patientID, 'documents'],{
+        queryParams:{
+          patientUserId:this.profile.userID
+        }
+      })
     }
     else if ($event.title === 'History') {
       this.router.navigate(['profile', this.authService.profile.userID, this.profile.patientID, 'history'],{
@@ -382,8 +275,14 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
       })
     }
     else if ($event.title === 'Tasks') {
-      this.router.navigate(['profile', this.authService.profile.userID, this.profile.patientID, 'task'])
+      this.router.navigate(['profile', this.authService.profile.userID, this.profile.patientID, 'task'],{
+        queryParams:{
+          patientUserId:this.profile.userID,
+        }
+      })
     }
   }
+ 
+
 }
  

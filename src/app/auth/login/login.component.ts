@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit{
 
       console.log('the time is given as2:', new Date().getMilliseconds());
       
-      this.routing.navigate([`/profile/${userID}/patient`]);
+      this.routing.navigate([`/profile/${userID}`]);
 
       // if (userID){ 
       //   this.authService.getProfiles(userID).subscribe(data =>{

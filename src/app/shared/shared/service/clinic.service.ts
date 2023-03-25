@@ -138,9 +138,9 @@ export class ClinicService {
   encountersIframe(payload:any):Observable<any>{ 
     return this.http.get(`Encounters/Encounter/${payload.userID}/${payload.encounterID}`)
   }
-  patientList(payload:any):Observable<any>{
-    return this.http.post(`Pateint/PateintList`,payload)
-  }
+  // patientList(payload:any):Observable<any>{
+  //   return this.http.post(`Pateint/PateintList`,payload)
+  // }
 }
 
 

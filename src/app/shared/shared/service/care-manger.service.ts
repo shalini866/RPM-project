@@ -21,6 +21,8 @@ export class CareMangerService {
   }
 
   displayProfile(payload:any):Observable<any>{
+    console.log('payload',payload);
+    
     return this.http.get(`Clinics/ClinicPatient/${payload.userID}/${payload.clinicID}/${payload.patientID}`,);
   }
   getHeaders() {
@@ -45,22 +47,25 @@ export class CareMangerService {
     return this.http.get(`Alerts/AlertActions/${id}`, { headers: this.getHeaders()})
   }
   assessmentlist(payload:any):Observable<any>{
-   
     return this.http.post(`Encounters/PatientEncounters`,payload)
   }
   documentlist(payload:any):Observable<any>{
     console.log('paylaod',payload)
-    return this.http.get(`MedicalRecords/RecordsList/${payload}`)
+    return this.http.get(`MedicalRecords/RecordsList/${payload.userId}`)
   }
   historylist(payload:any):Observable<any>{
-    console.log('paylaodddddd',payload)
-    return this.http.get(`Audits/GetAudits/${payload}/${payload.patientID}`)
+   
+    return this.http.get(`Audits/GetAudits/${payload.userId}/${payload.patientId}`)
   }
   taskstartlist(data:any):Observable<any>{
     return this.http.post(`CarePlan/GetTaskForDate`,data,{ headers: this.getHeaders()})
   }
   taskcompletelist(payload:any):Observable<any>{
+    // console.log('paylaodddddd',payload)
     return this.http.post(`CarePlan/GetCompletedTasks`,payload,{ headers: this.getHeaders()})
+  }
+  patientList(payload:any):Observable<any>{
+    return this.http.post(`Pateint/PatientsList`,payload,{ headers: this.getHeaders()})
   }
 }
  

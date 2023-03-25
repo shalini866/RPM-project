@@ -141,7 +141,7 @@
           <nb-card-body>
             <!--  -->
             <nb-list class=" mx-2 listht">
-              <nb-list-item *ngFor="let data of searchUser" class=" row py-2 px-0" (click)="profileList(data)">
+              <nb-list-item *ngFor="let data of searchUser" class=" row py-2 px-0" (click)="route(data)">
                 <div class="col-9 ">
                   <nb-user size="large" class="mt-2 mb-2" [picture]="data?.imageUrl"
                     name="{{data?.firstName}} {{data?.lastName}}" title="{{data?.dob}} "></nb-user>
@@ -283,8 +283,11 @@
              </nb-tab>
              </nb-tabset>  -->
         <nb-route-tabset [tabs]="tabs" (changeTab)="tabChanged($event)" fullWidth></nb-route-tabset>
+        <!-- <app-snapshot></app-snapshot> -->
+        <router-outlet></router-outlet>
       </div>
     </div>
 
+  
   </nb-layout-column>
 </nb-layout>

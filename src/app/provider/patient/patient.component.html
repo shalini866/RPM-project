@@ -1,77 +1,82 @@
 <nb-card class="sidegap">
-    <nb-card-header>
-        <h1>Patients</h1>
-    </nb-card-header>
-    <nb-card-body>
-        <nb-tabset fullWidth>
-            <nb-tab tabTitle="DEMOGRAPHICS">
-            </nb-tab>
-            <nb-tab tabTitle="ACTIVITY">
-            </nb-tab>
-         </nb-tabset>
-         <div class="d-flex">
-            <input nbInput type="search" placeholder="search" >
-            <nb-icon icon="funnel-outline" class=" mx-1"></nb-icon>
-            <button nbButton outline status="primary" class="ms-2" (click)="getpatient()">CEARTE NEW PATIENT</button>
-         </div>
-          
-  <ngx-datatable class="material h-100 pt-4 " [rows]="" columnMode="force" [headerHeight]="50" [footerHeight]="0"
-  [rowHeight]="50" [scrollbarV]="true" > 
-  <ngx-datatable-column name=" Name: " prop="parseExtraData" [flexGrow]="3">
-    <ng-template let-value="value" ngx-datatable-cell-template>
+  <nb-card-header>
+    <h1>Patients {{(count?.count)}} </h1>
+    
+  </nb-card-header>
+  <nb-card-body>
+    <nb-tabset fullWidth>
+      <nb-tab tabTitle="DEMOGRAPHICS">
+      </nb-tab>
+      <nb-tab tabTitle="ACTIVITY">
+      </nb-tab>
+    </nb-tabset>
+    <div class="d-flex">
+      <input nbInput type="search" placeholder="search">
+      <nb-icon icon="funnel-outline" class=" mx-1"></nb-icon>
+      <button nbButton outline status="primary" class="ms-2" >CEARTE NEW PATIENT</button>
+    </div>
 
-    </ng-template>
-  </ngx-datatable-column>
-  <ngx-datatable-column name="Age:" prop="parseExtraData" >
-    <ng-template let-value="value" ngx-datatable-cell-template>
-
-    </ng-template>
-  </ngx-datatable-column>
-  <ngx-datatable-column name="Gender:" prop="parseExtraData"> 
-    <ng-template let-value="value" ngx-datatable-cell-template>
-      
-    </ng-template>
-  </ngx-datatable-column>
-  <ngx-datatable-column name="Assessment:" prop="assessment">
-    <ng-template let-value="value" ngx-datatable-cell-template>
-   
-    </ng-template>
-  </ngx-datatable-column>
-  <ngx-datatable-column name="Site:" prop="parseExtraData" >
-    <ng-template let-value="value" ngx-datatable-cell-template>
-
-    </ng-template>
-  </ngx-datatable-column>
-  <ngx-datatable-column name="Reported:" prop="created">
-    <ng-template let-value="value" ngx-datatable-cell-template>
-
-    </ng-template>
-  </ngx-datatable-column>
-  <ngx-datatable-column name="Status:" prop="status">
-    <ng-template let-value="value" ngx-datatable-cell-template>
-   
-    </ng-template>
-  </ngx-datatable-column>
-   <ngx-datatable-column name="scheduled:" prop="" >
-    <ng-template let-value="value" ngx-datatable-cell-template>
-
-    </ng-template>
-  </ngx-datatable-column>
-  <ngx-datatable-column name="Action:" prop="" >
-    <ng-template let-value="value" ngx-datatable-cell-template>
-
-    </ng-template>
-  </ngx-datatable-column>
-  <ngx-datatable-column name="Marked-follow up:" prop="" >
-    <ng-template let-value="value" ngx-datatable-cell-template>
-        
-    </ng-template>
-  </ngx-datatable-column> 
-  <ngx-datatable-column name="Completed:" prop="Processed">
-    <ng-template let-value="value" ngx-datatable-cell-template>
-
-     </ng-template>
-  </ngx-datatable-column>
-</ngx-datatable>
-    </nb-card-body>
+    <ngx-datatable class="material h-100 pt-4 " [rows]="rows" columnMode="force" [headerHeight]="50" [footerHeight]="0"
+      [rowHeight]="50" [scrollbarV]="true" (activate)="onActivate($event)">
+      <ngx-datatable-column name=" Name: " prop="fullName" [flexGrow]="3">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Consent:" prop="consent">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <button nbButton outline status= "success" size="tiny" style="width: 100px;">consent
+          </button>
+          {{value}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Email:" prop="email">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="DOB:" prop="dob">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+        {{value}}
+        </ng-template> 
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Monitors:" prop="monitors">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Assigned Care Manger:" prop="careManagers">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Onboarded date:" prop="enrollmentDate">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Provider:" prop="providers">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Conditions:" prop="morbidities">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Preferred Language:" prop="Language">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          English
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Action:" prop="monitored">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <nb-icon icon="file-text-outline" nbTooltipStatus="control" status="primary" nbTooltipStatus="black"></nb-icon>
+          <button nbButton outline status= "success" size="tiny" style="width: 100px;">Enroll
+          </button>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </nb-card-body>
 </nb-card>

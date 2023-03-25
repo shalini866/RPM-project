@@ -45,7 +45,7 @@ export class TaskComponent {
     }
     const data={
     "byUsername":"",
-    "forUsername":this.profile.patientUserId,
+    "forUsername":this.patientUserId,
     "date": this.dateValue,
   }
     
@@ -55,7 +55,7 @@ export class TaskComponent {
     })
 
     const payload={
-      "completedBy":this.profile.patientUserId,
+      "completedBy":this.patientUserId,
       "assignedDateFrom":moment(new Date()).format('YYYY-MM-DD'),
       "assignedDateTo":moment(new Date()).format('YYYY-MM-DD'),
       "page":1,

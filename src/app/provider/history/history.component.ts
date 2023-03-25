@@ -39,16 +39,20 @@ export class HistoryComponent {
       console.log('checking the patientuserid in queryparam ^^^^^^***',this.patientUserId);
       this.gethistorylist()
     })
-  }
+  } 
   gethistorylist(){
-    this.careService.historylist(this.patientUserId).subscribe((res:any)=>{
+    const payload ={
+      userId:this.patientUserId,
+      patientId:this.patientId
+    }
+    this.careService.historylist(payload).subscribe((res:any)=>{
       console.log('this is historylist',res);
       this.rows = res.list
       console.log('checking the date & time ',this.rows);
     })
   }
   getDateValue(value: any, type: any){
-    if (type === 1) {
+    if (type === 1) { 
       return moment(value).format('MM/DD/YYYY hh:m A')
     }
     if (type === 2) {

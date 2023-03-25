@@ -20,12 +20,12 @@ const routes: Routes = [
     component: IndexComponent,
     children: [
       {
-        path: ':userId',
+        path: ':userId/:patientid',
         component: ProfileComponent,
         resolve: {
           profileData: ProfileResolver
         },
-     canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
 
         children: [
           {
@@ -58,7 +58,7 @@ const routes: Routes = [
         resolve: {
           profileData: ProfileResolver
         }
-      },
+      }, 
       {
         path: ':userId/encounter',
         loadChildren: () => import('../encounter-details/encounter-details.module').then(m => m.EncounterDetailsModule),
@@ -67,7 +67,7 @@ const routes: Routes = [
         }
       },
       {
-        path:':userId/patient',
+        path:':userId',
         component:PatientComponent,
         resolve: {
           profileData: ProfileResolver

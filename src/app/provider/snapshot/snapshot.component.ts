@@ -67,7 +67,7 @@ export class SnapshotComponent implements OnInit {
         const patientVitalList = this.patientVitalList.map((list: any) => {
           const vitalName = this.vitalList.find((datas: any) => {
             if (datas.vitalType === list.vitalTypeID) {
-              return datas;
+              return datas; 
             } else {
               return '';
             }
