@@ -27,12 +27,14 @@ export class VitalsComponent implements OnInit , AfterViewInit {
     private careService: CareMangerService,
     private activate: ActivatedRoute,
   ) {
-    this.activate.paramMap.subscribe((queryparam: any) => {
-      console.log('£££££$$$',queryparam);
-      this.patientUserName = activate.snapshot.params['patientId']
-      console.log('checking the patientuserid in queryparam ^^^^^^***',this.patientUserName);
-      this.getList(-1)
-    }) 
+    // this.activate.paramMap.subscribe((queryparam: any) => {
+    //   console.log('£££££$$$',queryparam);
+    //   this.patientUserName = activate.snapshot.params['patientId']
+    //   console.log('checking the patientuserid in queryparam ^^^^^^***',this.patientUserName);
+    // }) 
+    this.patientUserName = activate.parent?.snapshot.params['patientid']
+    console.log('checking the param in vitals',this.patientUserName);
+    this.getList(-1)
   }
  
   ngOnInit(): void {

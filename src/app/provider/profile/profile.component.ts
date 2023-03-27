@@ -227,12 +227,12 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
       this.profile = res;
       console.log('$$$$$$$$$$$$$$$$',res);
       
-      this.router.navigate(['profile', this.userId, this.profile.patientID, 'snapshot'], {
+      this.router.navigate(['profile', this.userId, this.patientUserId, 'snapshot'], {
         queryParams: {
           patientUserId: this.profile.userID,
         } 
       })
-      console.log('checkkkkkkkkkkk  the router navigate',this.userId);
+      console.log('checkkkkkkkkkkk  the router navigate',this.patientUserId);
        
     })
    
@@ -241,41 +241,51 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
   tabChanged($event: any) {
     console.log($event)
     if ($event.title === 'Snapshot') {
-      this.router.navigate(['profile', this.authService.profile.userID, this.profile.patientID, 'snapshot'], {
+      console.log('check%%%%%%%%%%%%%  the router navigate',this.patientUserId);
+      this.router.navigate(['profile', this.userId, this.patientUserId, 'snapshot'], {
         queryParams: {
           patientUserId: this.profile.userID,
         }
       })
     }
      else if ($event.title === 'Vitals') {
-      this.router.navigate(['profile', this.authService.profile.userID, this.profile.patientID, 'vitals'])
+      this.router.navigate(['profile', this.userId, this.patientUserId, 'vitals'],{
+        queryParams: {
+          patientUserId: this.profile.userID,
+        }
+      })
     }  
     else if ($event.title === 'Alerts') {
-      this.router.navigate(['profile', this.authService.profile.userID, this.profile.patientID, 'alerts'])
+      this.router.navigate(['profile', this.userId, this.patientUserId, 'alerts'],{
+        // queryParams: {
+        //   patientUserId: this.profile.userID,
+        // }
+      })
+      
     }
     else if ($event.title === 'Assessments') {
-      this.router.navigate(['profile', this.authService.profile.userID, this.profile.patientID, 'assessments'], {
+      this.router.navigate(['profile', this.userId, this.patientUserId, 'assessments'], {
         queryParams: {
           patientUserId: this.profile.userID,
         }
       })
     }
     else if ($event.title === 'Documents') {
-      this.router.navigate(['profile', this.authService.profile.userID, this.profile.patientID, 'documents'],{
+      this.router.navigate(['profile', this.userId, this.patientUserId, 'documents'],{
         queryParams:{
           patientUserId:this.profile.userID
         }
       })
     }
     else if ($event.title === 'History') {
-      this.router.navigate(['profile', this.authService.profile.userID, this.profile.patientID, 'history'],{
+      this.router.navigate(['profile', this.userId, this.patientUserId, 'history'],{
         queryParams: {
           patientUserId: this.profile.userID,
         }
       })
     }
     else if ($event.title === 'Tasks') {
-      this.router.navigate(['profile', this.authService.profile.userID, this.profile.patientID, 'task'],{
+      this.router.navigate(['profile', this.userId, this.patientUserId, 'task'],{
         queryParams:{
           patientUserId:this.profile.userID,
         }

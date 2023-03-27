@@ -29,25 +29,25 @@ const routes: Routes = [
 
         children: [
           {
-            path: ':patientId/snapshot',
+            path: 'snapshot',
             component: SnapshotComponent,
           }, {
-            path: ':patientId/vitals',
+            path: 'vitals',
             component: VitalsComponent,
           },{
-            path: ':patientId/alerts',
+            path: 'alerts',
             component: AlertsComponent,
           },{
-            path: ':patientId/assessments',
+            path: 'assessments',
             component: AssessmentComponent,
           },{
-            path: ':patientId/documents',
+            path: 'documents',
             component:DocumentsComponent,
           },{
-            path: ':patientId/history',
+            path: 'history',
             component:HistoryComponent,
           },{
-            path: ':patientId/task',
+            path: 'task',
             component:TaskComponent,
           }
         ]

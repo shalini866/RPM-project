@@ -33,21 +33,17 @@ export class AlertsComponent implements OnInit {
     private dialogService: NbDialogService,
     private activate:ActivatedRoute
   ){
-   this.activate.paramMap.subscribe((queryparam)=>{
-
-    console.log('$$$$$$$$$$$$$$',queryparam);
-    
-    this.patientUserName = activate.snapshot.params['patientId']
-      console.log('checking the patientuserid in queryparam ^^^^^^***',this.patientUserName);
-      this.alertslist()
-   })
+    console.log('checking the alerts1 ',this.activate);
+    console.log('checking the alerts2 ',this.activate.parent);
+    this.patientUserName = activate.parent?.snapshot.params['patientid']
+    this.alertslist()
   }
   ngOnInit(): void {
     // this.alertslist()
   }
   alertslist(){
     this.careService.alertslist(this.patientUserName).subscribe((res:any) =>{
-      console.log('this.patientUserName',this.patientUserName)
+       console.log('this.patientUserName',this.patientUserName)
       console.log('check the alertslist',res);
       this.rows =res.list
       console.log('the getAlertApi API', res);

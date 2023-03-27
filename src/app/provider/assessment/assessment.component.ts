@@ -13,8 +13,9 @@ export class AssessmentComponent implements OnInit {
   profile: any;
   id: any;
   rows:any
-  patientUserId: any;
+  patientUserName: any;
   patientId: any;
+  patientUserId: any;
   // @Input() 
   // get getassessmentDetails(){
   //   return this.profile
@@ -34,12 +35,17 @@ export class AssessmentComponent implements OnInit {
     private auth: AuthService,
      private activate: ActivatedRoute,
   ){
-    this.activate.paramMap.subscribe((queryparam)=>{
-      this.patientId = activate.snapshot.params['patientId']
-      this.patientUserId = activate.snapshot.queryParams['patientUserId']
-        console.log('checking the patientuserid in queryparam ^^^^^^***',this.patientUserId);
-        this.assesslist()
-     })
+    // this.activate.paramMap.subscribe((queryparam)=>{
+    //   console.log('checking the queryparam in assessment',);
+    //   this.patientId = activate.snapshot.params['patientId']
+    //   this.patientUserId = activate.snapshot.queryParams['patientUserId']
+    //     console.log('checking the patientuserid in queryparam ^^^^^^***',this.patientUserId);
+    //     this.assesslist()
+    //  })
+    this.patientUserName = activate.parent?.snapshot.params['patientid']
+    this.patientUserId = activate.parent?.snapshot.params['userId']
+    console.log('checking the patientuserid in queryparam ^^^^^^***',this.patientUserId);
+    this.assesslist()
   }
   ngOnInit(): void {
     // this.assesslist()
@@ -50,7 +56,7 @@ export class AssessmentComponent implements OnInit {
     const payload ={
     "clinicID": this.auth.profile.clinicID,
     "userID":    this.patientUserId,
-    "patientID": this.patientId
+    "patientID":  this.patientUserName
   }
    this.careService.assessmentlist(payload).subscribe((res:any)=>{
     console.log('this is assessment',res);

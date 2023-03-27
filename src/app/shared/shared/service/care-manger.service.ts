@@ -40,17 +40,17 @@ export class CareMangerService {
     return this.http.post(`Vitals/Search`,payload , { headers: this.getHeaders()})
   }
   alertslist(payload:any):Observable<any>{
-   
+    console.log('paylaod',payload)
     return this.http.get(`Alerts/List/1000254/${payload}`, { headers: this.getHeaders()})
   }
   alertlistApi(id: any):Observable<any>{
     return this.http.get(`Alerts/AlertActions/${id}`, { headers: this.getHeaders()})
   }
   assessmentlist(payload:any):Observable<any>{
-    return this.http.post(`Encounters/PatientEncounters`,payload)
+    return this.http.post(`Encounters/PatientEncounters`,payload,)
   }
   documentlist(payload:any):Observable<any>{
-    console.log('paylaod',payload)
+    
     return this.http.get(`MedicalRecords/RecordsList/${payload.userId}`)
   }
   historylist(payload:any):Observable<any>{

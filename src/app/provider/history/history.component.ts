@@ -14,6 +14,7 @@ export class HistoryComponent {
   rows: any;
   patientUserId: any;
   patientId: any;
+  patientUserName: void;
   // @Input() 
   // get gethistoryDetails(){
   //   return this.profile
@@ -32,18 +33,21 @@ export class HistoryComponent {
     private authSerivce:AuthService,
     private activate: ActivatedRoute,
   ){
-    this.activate.queryParamMap.subscribe((queryparam: any) => {
-       this.patientId = activate.snapshot.params['patientId']
-       console.log('checking the history patientid',this.patientId)
-      this.patientUserId = activate.snapshot.queryParams['patientUserId']
-      console.log('checking the patientuserid in queryparam ^^^^^^***',this.patientUserId);
-      this.gethistorylist()
-    })
+    // this.activate.queryParamMap.subscribe((queryparam: any) => {
+    //    this.patientId = activate.snapshot.params['patientId']
+    //    console.log('checking the history patientid',this.patientId)
+    //   this.patientUserId = activate.snapshot.queryParams['patientUserId']
+    //   console.log('checking the patientuserid in queryparam ^^^^^^***',this.patientUserId);
+     
+    // })
+    this.patientUserName = activate.parent?.snapshot.params['patientid']
+    this.patientUserId = activate.parent?.snapshot.params['userId']
+    this.gethistorylist()
   } 
   gethistorylist(){
     const payload ={
       userId:this.patientUserId,
-      patientId:this.patientId
+      patientId: this.patientUserName
     }
     this.careService.historylist(payload).subscribe((res:any)=>{
       console.log('this is historylist',res);

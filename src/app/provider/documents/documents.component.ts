@@ -11,28 +11,20 @@ export class DocumentsComponent  implements OnInit{
   profile: any;
   patientUserId: any;
   patientId: any;
-  // @Input() 
-  // get getdocumentsDetails(){
-  //   return this.profile
-  // }
-  // set getdocumentsDetails(value: any){
-  //   if(value){
-  //     this.profile = value
-  //     console.log('this is the alert component details', this.profile);
-  //     const id = this.profile.userID
-  //     console.log('check  the patientidffrghb ',id);
-      
-  //   }
-  // }
+  patientUserName: any;
+  rows: any;
+
   constructor( 
     private careService : CareMangerService,
     private activate:ActivatedRoute,
   ){
-    this.activate.queryParamMap.subscribe((queryparam:any)=>{
-      // this.patientId=activate.snapshot.params['patientId']
-      this.patientUserId=activate.snapshot.queryParams['patientUserId']
-      this.getdocumentlist()
-    })
+    // this.activate.queryParamMap.subscribe((queryparam:any)=>{
+    //   this.patientId=activate.snapshot.params['patientId']
+    //   this.patientUserId=activate.snapshot.queryParams['patientUserId']
+    // })
+    this.patientUserId = activate.parent?.snapshot.params['userId']
+    console.log('check the patientUserId in document',this.patientUserId);
+    this.getdocumentlist()
   }
   ngOnInit(): void {
   //  this.getdocumentlist()
@@ -44,6 +36,9 @@ export class DocumentsComponent  implements OnInit{
   
     this.careService.documentlist(payload).subscribe((res:any) =>{
       console.log('this is documentlist',res);
+      this.rows = res.medicalRecordsList
+      console.log('checking the document medicalRecordList',this.rows);
+      
     })
   }
 }
