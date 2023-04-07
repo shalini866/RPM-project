@@ -234,10 +234,12 @@
               <!--col4-->
               <div class="col btncls">
                 <button nbButton status="danger" class="m-1 sizze justify-content-start" size="small">
-                  <nb-icon icon="info-outline"></nb-icon>ESCALATE
+                  <nb-icon icon="info-outline"></nb-icon>
+                  <a (click)="forms()">ESCALATE</a>
                 </button>
                 <button nbButton status="warning" class="m-1 sizze justify-content-start" size="small">
-                  <nb-icon icon="message-square-outline"></nb-icon>CHAT
+                  <nb-icon icon="message-square-outline"></nb-icon>
+                  <a (click)="forms2()">CHAT</a>
                 </button><br>
                 <button nbButton status="info" class="m-1 sizze justify-content-start" size="small">
                   <nb-icon icon="phone-call-outline"></nb-icon>CALL

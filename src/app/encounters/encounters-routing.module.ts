@@ -11,7 +11,6 @@ const routes: Routes = [
     path: 'encounter',
     component: IndexComponent,
      canActivate: [AuthGuard],
-
     children: [
 
       {

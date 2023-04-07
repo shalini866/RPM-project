@@ -67,7 +67,7 @@ export class AlertsComponent implements OnInit {
   } 
   viewNotes( data : any){
   const modalRef:any =this.dialogService?.open(AlertsNotesComponent);
-  modalRef.componentRef.instance.alertData = data;
+  modalRef.componentRef.instance.alertData = data;  
   }
   }
   

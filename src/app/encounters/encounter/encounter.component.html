@@ -12,7 +12,7 @@
      </div> 
      <div class="d-flex align-items-center pt-4">
          <button class="mx-2" nbButton outline status="success" (click) = getdate(1)>TODAY</button>
-         <button class="mx-2" nbButton outline status="success" (click) = getdate(7)>THIS WEEK </button>
+         <button class="mx-2" nbButton outline status="success" (click) = getdate(7)>THIS WEEK </button> 
          <button class="mx-2" nbButton outline status="success" (click) = getdate(31)>THIS MONTH</button>
      </div>
      <div class="d-flex align-items-center pt-4">
@@ -23,10 +23,10 @@
        <nb-icon  style="font-size: 3rem;" class="cursor-pointer" icon="arrow-ios-forward-outline" (click) = getdate(1)>
        </nb-icon>
    </div>
-    </div>
+    </div> 
     <div class="d-flex align-items-center pt-4">
      <div>
-         <button nbButton  status="primary" class="me-4">GROUP MEETING</button>
+         <button nbButton  status="primary" class="me-4" (click)="groupmeeting()">GROUP MEETING</button>
          <button nbButton  status="primary">SCHEDULED APPOINTMENT</button>
      </div>
     </div>
@@ -34,18 +34,18 @@
 
  
   <ngx-datatable class="material h-100 pt-4 " [rows]="rows" columnMode="force" [headerHeight]="50" [footerHeight]="0"
-      [rowHeight]="50" [scrollbarV]="true" (activate)="onActivate($event)"> 
-      <ngx-datatable-column name=" Name: " prop="parseExtraData" [flexGrow]="3">
+      [rowHeight]="50" [scrollbarV]="true" (activate)="onActivate($event)" [columnMode]="ColumnMode.force" (sort)="onSort($event)"> 
+      <ngx-datatable-column name=" Name" prop="parseExtraData" [flexGrow]="3">
         <ng-template let-value="value" ngx-datatable-cell-template >
           {{value.firstName}} {{value.lastName}}
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Age:" prop="parseExtraData" [ngSwitch]>
+      <ngx-datatable-column name="Age" prop="parseExtraData" [ngSwitch]>
         <ng-template let-value="value" ngx-datatable-cell-template>
           {{value.age}}
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Gender:" prop="parseExtraData"> 
+      <ngx-datatable-column name="Gender" prop="parseExtraData"> 
         <ng-template let-value="value" ngx-datatable-cell-template>
           <div [ngSwitch]="value?.gender">
            <div *ngSwitchCase ="0">Male</div>
@@ -54,22 +54,22 @@
           </div>
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Assessment:" prop="assessment">
+      <ngx-datatable-column name="Assessment" prop="assessment">
         <ng-template let-value="value" ngx-datatable-cell-template>
           {{value}}
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Site:" prop="parseExtraData" *ngIf="this.encounterBucket =='waitingroom'">
+      <ngx-datatable-column name="Site" prop="parseExtraData" *ngIf="this.encounterBucket =='waitingroom'">
         <ng-template let-value="value" ngx-datatable-cell-template>
           {{value.ClinicName}}
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Reported:" prop="created">
+      <ngx-datatable-column name="Reported" prop="created" [sortable]="true">
         <ng-template let-value="value" ngx-datatable-cell-template>
           {{getDateValue(value)}}
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Status:" prop="status" *ngIf="this.encounterBucket ==='asynchronous'|| this.encounterBucket =='callback'">
+      <ngx-datatable-column name="Status" prop="status" *ngIf="this.encounterBucket ==='asynchronous'|| this.encounterBucket =='callback'">
         <ng-template let-value="value" ngx-datatable-cell-template>
           <div [ngSwitch]="value">
             <div *ngSwitchCase="0">Pending Review</div>
@@ -78,24 +78,25 @@
           </div>
         </ng-template>
       </ngx-datatable-column>
-       <ngx-datatable-column name="scheduled:" prop="" *ngIf="this.encounterBucket =='scheduled'">
+       <ngx-datatable-column name="scheduled" prop="" *ngIf="this.encounterBucket =='scheduled'">
         <ng-template let-value="value" ngx-datatable-cell-template>
           {{value}}
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Action:" prop="" *ngIf="this.encounterBucket =='scheduled'">
+      <ngx-datatable-column name="Action" prop="" *ngIf="this.encounterBucket =='scheduled'">
         <ng-template let-value="value" ngx-datatable-cell-template>
           {{value}}
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Marked-follow up:" prop="" *ngIf="this.encounterBucket =='followup'">
+      <ngx-datatable-column name="Marked-follow up" prop="" *ngIf="this.encounterBucket =='followup'">
         <ng-template let-value="value" ngx-datatable-cell-template>
           {{value}}
         </ng-template>
       </ngx-datatable-column> 
-      <ngx-datatable-column name="Completed:" prop="Processed" *ngIf="this.encounterBucket =='completed'">
+      <ngx-datatable-column name="Completed" prop="Processed" *ngIf="this.encounterBucket =='completed'">
         <ng-template let-value="value" ngx-datatable-cell-template>
           {{getDateValue(value)}}       
          </ng-template>
       </ngx-datatable-column>
     </ngx-datatable>
+ 

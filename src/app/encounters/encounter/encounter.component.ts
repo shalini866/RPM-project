@@ -4,6 +4,10 @@ import * as moment from 'moment';
 import { AuthService } from 'src/app/shared/shared/service/auth.service';
 import { ClinicService } from 'src/app/shared/shared/service/clinic.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ColumnMode } from '@swimlane/ngx-datatable';
+import { NbDialogService } from '@nebular/theme';
+import { GroupMeetingComponent } from './group-meeting/group-meeting.component';
+
 
 
 
@@ -15,9 +19,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class EncounterComponent implements OnInit {
   profile: any;
   rows: any;
+  ColumnMode = ColumnMode;
   encounterlist: any;
   statusdetails: any;
-  type: any
+  data: any
   finaldate: { fromdatesss: number, toDatesss: number } = {
     fromdatesss: 0,
     toDatesss: 0
@@ -25,17 +30,21 @@ export class EncounterComponent implements OnInit {
   encounterBucket: any;
   noOfDays: any;
   dateValue = moment(new Date()).format('YYYY-MM-DD')
+  a: any;
+  ascc: any;
 
   constructor(
     private clinicService: ClinicService,
     private authService: AuthService,
     private routing: ActivatedRoute,
     private route: Router,
+    private dialogService:NbDialogService,
   ) {
     this.profile = this.authService.profile;
     this.routing.params.subscribe((data: any) => {
       console.log('%%%%%%', data);
       this.encounterBucket = data.buckets;
+      console.log('$$$$$',data.buckets);
       if (this.encounterBucket === 'scheduled') {
         this.getdate(1);
       } else {
@@ -76,7 +85,7 @@ export class EncounterComponent implements OnInit {
     }
     this.bucket('scheduled')
   }
-  bucket(type: any) {
+  bucket(data: any, sort?: { sortBy: number, sortDirection: number }) {
     let payload: any = {
       "clinicID": this.profile.clinicID,
       "providerID": this.profile.userName,
@@ -85,75 +94,94 @@ export class EncounterComponent implements OnInit {
       "name": "",
       "pageSize": 25,
     }
-    switch (type) {
+    switch (data) {
       case 6:
       case 'waitingroom':
+        if (!sort) {
+          sort = { sortBy: 0, sortDirection: 0 };
+        }
         payload = {
           ...payload,
           "providerOnly": false,
-          "sortBy": 0,
+          "sortBy": sort.sortBy,
           "status": [0, 1, 4],
-          "type": 6
+          "type": 6,
+          "sortDirection": sort.sortDirection,
+
         }
         break;
       case 1:
       case 'scheduled':
+        if (!sort) {
+          sort = { sortBy: 3, sortDirection: 0 };
+        }
         payload = {
           ...payload,
           "providerOnly": true,
-          "sortBy": 3,
+          "sortBy": sort.sortBy,
           "status": [0, 1, 4],
           "type": 1,
-          "sortDirection": 0,
+          "sortDirection": sort.sortDirection,
           "start": this.finaldate.fromdatesss,
           "end": this.finaldate.toDatesss
         }
         break;
       case 0:
       case 'asynchronous':
+        if (!sort) {
+          sort = { sortBy: 0, sortDirection: 0 };
+        }
         payload = {
           ...payload,
           "providerOnly": false,
-          "sortBy": 0,
-          "sortDirection": 0,
+          "sortBy": sort.sortBy,
+          "sortDirection": sort.sortDirection,
           "status": [0, 1],
           "type": 0
         }
         break;
       case 3:
       case 'callback':
+        if (!sort) {
+          sort = { sortBy: 0, sortDirection: 0 };
+        }
         payload =
         {
           ...payload,
           "providerOnly": false,
-          "sortBy": 0,
+          "sortBy": sort.sortBy,
           "status": [0, 1],
           "type": 3,
-          "sortDirection": 0
+          "sortDirection": sort.sortDirection
         }
         break;
       case -2:
       case 'followup':
+        if (!sort) {
+          sort = { sortBy: 0, sortDirection: 1 };
+        }
         payload =
-
         {
           ...payload,
           "providerOnly": true,
-          "sortBy": 0,
+          "sortBy": sort.sortBy,
           "status": [7],
           "type": -2,
-          "sortDirection": 1
+          "sortDirection": sort.sortDirection
         }
         break;
       case 2:
       case 'completed':
+        if (!sort) {
+          sort = { sortBy: 0, sortDirection: 1 };
+        }
         payload = {
           ...payload,
           "providerOnly": true,
-          "sortBy": 0,
+          "sortBy": sort.sortBy,
           "status": [2],
           "type": -2,
-          "sortDirection": 1
+          "sortDirection": sort.sortDirection
         }
         break;
     }
@@ -188,5 +216,35 @@ export class EncounterComponent implements OnInit {
       this.route.navigate(['profile', this.profile.userID, 'encounter', event.row.encounterID])
     }
   }
+
+  onSort(event: any) {
+    const cloumn = event.column.name
+    if (cloumn === 'Reported' || cloumn === 'Status') {
+      console.log('column', cloumn);
+      let sortBy = 0;
+      let sortDirection = 0;
+      if (event.newValue = 'asc') {
+
+        sortDirection = 0;
+      }
+      else {
+        sortDirection = 1;
+      }
+      switch (cloumn) {
+        case 'Reported':
+          sortBy = 0;
+          break;
+        case 'Status':
+          sortBy = 4;
+          break;
+      }
+      this.bucket(this.encounterBucket, { sortBy, sortDirection })
+      console.log('ccheckijjjjj', this.encounterBucket);
+    }
+  }
+  groupmeeting(){
+   const modalRef= this.dialogService?.open(GroupMeetingComponent)
+  }
+
 }
 

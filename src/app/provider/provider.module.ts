@@ -18,6 +18,9 @@ import { DocumentsComponent } from './documents/documents.component';
 import { HistoryComponent } from './history/history.component';
 import { TaskComponent } from './task/task.component';
 import { PatientComponent } from './patient/patient.component';
+import { FormsComponent } from './profile/forms/forms.component';
+import { TestformComponent } from './profile/testform/testform.component';
+// import { StoreModule } from '@ngrx/store';
 
 
 @NgModule({
@@ -33,6 +36,13 @@ import { PatientComponent } from './patient/patient.component';
     HistoryComponent,
     TaskComponent,
     PatientComponent,
+    FormsComponent,
+    TestformComponent,
+    // StoreModule.forRoot(reducers, {
+    //   initialState: {
+    //     timer: '0:0'
+    //   }
+    // }),
   
      ],
   imports: [

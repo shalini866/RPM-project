@@ -1,0 +1,44 @@
+<nb-card size="large">
+    <nb-card-header>
+        Form Array
+    </nb-card-header>
+    <nb-card-body>
+        <form [formGroup]="patientform">
+            <input formControlName="name" nbInput status="success" class="mb-3 mx-2" type="text"
+                        placeholder=" Name..">
+                    <input formControlName="number" nbInput status="success" class="mb-3 mx-2" type="tel"
+                        placeholder="Number..">
+
+            <div formArrayName="firstuser" *ngFor="let user of firstuser.controls let i = index">{{i}}
+                <div [formGroupName]="i">
+                    <input formControlName="firstName" nbInput status="success" class="mb-3 mx-2" type="text"
+                        placeholder="First Name..">
+                    <input formControlName="lastName" nbInput status="success" class="mb-3 mx-2" type="text"
+                        placeholder="Last Name..">
+
+                    <input nbInput status="success" placeholder="Form Picker" [nbDatepicker]="formcontrol" formControlName="date">
+                    <nb-datepicker #formcontrol class="mb-3 mx-2"></nb-datepicker>
+                    <input formControlName="password" nbInput status="success" class="mb-3 mx-2" type="password"
+                        placeholder="Password">
+                    <button class="m-2" nbButton shape="rectangle" size="small" status="primary"
+                        (click)="remove(i)">Remove</button>
+
+                    <div formArrayName="seconduser" *ngFor="let users of extradetials(i).controls let x= index"> {{x}}
+                        <div [formGroupName]="x">
+                            <input formControlName="age" nbInput status="success" class="mb-3 mx-2" type="tel"
+                                placeholder="Age..">
+                            <input formControlName="gender" nbInput status="success" class="mb-3 mx-2" type="text"
+                                placeholder="Gender..">
+                            <button class="m-2" nbButton shape="rectangle" size="small" status="primary"
+                                (click)="removegrp2(i,x)">Remove</button>
+                        </div>
+                    </div>
+                    <button class="m-2" nbButton shape="rectangle" size="small" status="primary"
+                        (click)="addgrp2(i)">Add</button>
+                </div>
+            </div>
+            <button class="m-2" nbButton shape="rectangle" size="small" status="primary" (click)="adduser()">Add
+                Details</button>
+        </form>
+    </nb-card-body>
+</nb-card>

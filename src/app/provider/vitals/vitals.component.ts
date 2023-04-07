@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Chart } from 'chart.js';
 import * as moment from 'moment';
+import { BehaviorSubject } from 'rxjs';
 import { CareMangerService } from 'src/app/shared/shared/service/care-manger.service';
 
 @Component({
@@ -17,35 +18,69 @@ export class VitalsComponent implements OnInit , AfterViewInit {
     start: new Date('1900-02-01'),
     end: new Date()
   };
-  name = 'Angular   6';
   canvas: any;
   ctx: any;
-
+  count: number = 10
   @ViewChild('mychart') mychart:any
   patientUserName: any;
+  // element : HTMLElement | any;
+  // clientX: any;
+  // clientY: any;
+  // updateBox: any;
+  // currentId: any;
+  // offsetX: any;
+  // offsetY: any;
+ 
   constructor(
     private careService: CareMangerService,
     private activate: ActivatedRoute,
+    private cd: ChangeDetectorRef,
+    private zone :NgZone,
   ) {
-    // this.activate.paramMap.subscribe((queryparam: any) => {
-    //   console.log('£££££$$$',queryparam);
-    //   this.patientUserName = activate.snapshot.params['patientId']
-    //   console.log('checking the patientuserid in queryparam ^^^^^^***',this.patientUserName);
-    // }) 
+      console.log('this.cd',cd);
+      
     this.patientUserName = activate.parent?.snapshot.params['patientid']
     console.log('checking the param in vitals',this.patientUserName);
     this.getList(-1)
   }
- 
+  // mouseDown(event:any){
+  //   this.element = event.target;
+  //   this.zone.runOutsideAngular(()=>{
+  //     window.document.addEventListener('mousemove',this.mouseMove.bind((this)))
+  //   })
+  //   console.log('checking the mousedown event',onmousemove);
+  // }
+  // mouseMove(event:any){
+  //   event.preventDefault();
+  //   this.element.setAttribute('x', event.clientX + this.clientX + 'px');
+  //   this.element.setAttribute('y', event.clientX + this.clientY + 'px');   
+  //   console.log('checking the mousedown event',this.mouseMove); 
+  // }
+
+  // mouseUp(event:any) {
+  //   console.log('event',event);
+  //   this.zone.run(() => {
+  //     this.updateBox(this.currentId, event.clientX + this.offsetX, event.clientY + this.offsetY);
+  //     this.currentId = null;
+  //   });
+
+  //   window.document.removeEventListener('mousemove', this.mouseMove);
+  // }
   ngOnInit(): void {
+  
+   
+   console.log('checking the changes',);
+   
   }
+
+  
   ngAfterViewInit() {
     this.canvas = this.mychart.nativeElement as HTMLCanvasElement; 
     this.ctx = this.canvas.getContext('2d');
 
     let myChart = new Chart(this.ctx, {
       type: 'line',
-      
+       
       data: {
         datasets: [{
           label: 'Line Chart',
@@ -118,4 +153,9 @@ export class VitalsComponent implements OnInit , AfterViewInit {
       this.getvitalsList();
     }
   }
-}
+
+    
+  }
+
+  
+

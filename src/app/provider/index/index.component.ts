@@ -43,7 +43,8 @@ export class IndexComponent implements OnInit, AfterViewChecked {
     },
     {
       title: 'Chat',
-        icon: 'message-circle-outline',
+      icon: 'message-circle-outline',
+      link: `/profile/${this.profile.userID}/chat/index,`
     },
     {
       title: 'MyTasks',

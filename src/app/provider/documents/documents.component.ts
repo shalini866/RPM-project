@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
 import { CareMangerService } from 'src/app/shared/shared/service/care-manger.service';
 
 @Component({
@@ -38,7 +39,15 @@ export class DocumentsComponent  implements OnInit{
       console.log('this is documentlist',res);
       this.rows = res.medicalRecordsList
       console.log('checking the document medicalRecordList',this.rows);
-      
     })
+  }
+
+  getDateValue(values:any){
+  let value;
+  if(value == "" || values == "invalid date"){
+    value = "-"
+  }else if(value){
+    value = moment(values).format('DD/MM/YYYY')
+  }
   }
 }

@@ -1,0 +1,37 @@
+<nb-card class="card">
+    <nb-card-header>Group Meeting
+        <div class="float-end">
+            <nb-icon icon="close-outline" nbTooltip="close"></nb-icon>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="d-flex justify-content-end">
+            <button nbButton outline status="danger" size="medium">ADD GROUP MEETING</button>
+        </div>
+       <div>
+        <ngx-datatable class="material h-100" [rows]="rows" columnMode="force" [headerHeight]="50" [footerHeight]="0" 
+        [rowHeight]="50" [scrollbarV]="true" >
+        <ngx-datatable-column name="Title" prop="title">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+                 <span>{{value}}</span> 
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Meeting Info" prop="meetingInfo">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+                 <span>{{value}}</span> 
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Participants" prop="participantShow">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+                <span>{{value}}</span> 
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Action" prop="">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+                 <span></span> 
+            </ng-template>
+        </ngx-datatable-column>
+    </ngx-datatable>
+       </div>
+    </nb-card-body>
+  </nb-card>

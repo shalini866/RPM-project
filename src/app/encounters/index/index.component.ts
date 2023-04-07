@@ -64,8 +64,8 @@ export class IndexComponent {
           "type": 1,
           "providerOnly": true,
           "status": [0, 1, 4]
-        }],
-      "userID": ""
+        }], 
+      "userID": this.profile.userID
     }
     this.clinicService.getStarts(payload).subscribe((res: any) => {
       this.statusdetails = res.types;
@@ -75,8 +75,6 @@ export class IndexComponent {
     })
  
   }
-  
-  
   getStatsNub(type:any) {
     let count = '0';
     (this.statusdetails ).map((status: any) => {
@@ -86,9 +84,6 @@ export class IndexComponent {
     });
     return count;
   }
-
-
-  
  bucket(type:any){
   this.getstatslist()
   this.route.navigate([`/profile/${this.profile.userID}/encounters/encounter/${type}`])

@@ -30,9 +30,17 @@
                 <nb-action nbTooltip="refresh" nbTooltipPlacement="left" icon="refresh-outline"></nb-action>
             </nb-actions>
         </div>
+        <!-- <svg (mousedown)="mouseDown($event)"
+             (mouseup)="mouseUp($event)">
+
+                <svg:g box *ngFor="let box of boxes" [box]="box">
+              </svg:g> 
+            </svg> -->
+
+         <!-- <button nbButton status="danger"(click)="incount()">Check</button> -->
     </nb-card-header>
     <nb-card-body>
         <canvas id="myChart" width="700" height="250" #mychart>
         </canvas>
     </nb-card-body>
-</nb-card> 
+</nb-card>  

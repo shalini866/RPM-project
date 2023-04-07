@@ -8,14 +8,24 @@
     <nb-card-body>
         <ngx-datatable class="material h-100" [rows]="rows" columnMode="force" [headerHeight]="50" [footerHeight]="0" 
             [rowHeight]="50" [scrollbarV]="true" >
-            <ngx-datatable-column name="Title:" prop="audittime">
+            <ngx-datatable-column name="Title:" prop="title">
                 <ng-template let-value="value" ngx-datatable-cell-template>
-                     <!-- <span>{{}}</span>  -->
+                      <span>{{value}}</span>  
                 </ng-template>
             </ngx-datatable-column>
-            <ngx-datatable-column name="Description:" prop="name">
+            <ngx-datatable-column name="Description:" prop="description">
                 <ng-template let-value="value" ngx-datatable-cell-template>
-                     <!-- <span>{{}}</span>  -->
+                      <span>{{value}}</span>  
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="File Name" prop="fileName">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                      <span>{{value}}</span>  
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Date:" prop="recordDate">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                      <span>{{getDateValue(value)}}</span>  
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Action:" prop="duration">
@@ -24,4 +34,4 @@
                 </ng-template>
             </ngx-datatable-column>
         </ngx-datatable>
-    </nb-card-body>
+    </nb-card-body> 

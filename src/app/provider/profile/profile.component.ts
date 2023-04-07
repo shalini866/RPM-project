@@ -4,6 +4,8 @@ import { NbDialogService, NbRouteTab } from '@nebular/theme';
 import { AuthService } from 'src/app/shared/shared/service/auth.service';
 import { CareMangerService } from 'src/app/shared/shared/service/care-manger.service';
 import { ClinicService } from 'src/app/shared/shared/service/clinic.service';
+import { FormsComponent } from './forms/forms.component';
+import { TestformComponent } from './testform/testform.component';
 
 @Component({
   selector: 'app-profile',
@@ -293,6 +295,12 @@ export class ProfileComponent implements OnInit, AfterViewChecked {
     }
   }
  
-
+forms(){
+  const modalRef:any =this.dialogService?.open(FormsComponent);
+  // modalRef.componentRef.instance.
+}
+forms2(){
+  const modalRef:any =this.dialogService?.open(TestformComponent);
+}
 }
  

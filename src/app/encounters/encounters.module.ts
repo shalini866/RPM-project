@@ -8,12 +8,14 @@ import { NbActionsModule, NbAutocompleteModule, NbButtonGroupModule, NbButtonMod
 import { SharedModule } from '../shared/shared.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { IndexComponent } from './index/index.component';
+import { GroupMeetingComponent } from './encounter/group-meeting/group-meeting.component';
 
 
 @NgModule({
   declarations: [
     EncounterComponent,
     IndexComponent,
+    GroupMeetingComponent,
   ],
   imports: [
     CommonModule,

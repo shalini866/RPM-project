@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import {  HttpClient,  } from '@angular/common/http';
+import {  HttpClient, HttpHeaders,  } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
+import { AuthService } from './auth.service';
 
 
 @Injectable({
@@ -13,6 +14,7 @@ export class ClinicService {
 
   constructor(
     private http:HttpClient,
+    private authService : AuthService
   ) { } 
  
   getvitals(){
@@ -138,10 +140,17 @@ export class ClinicService {
   encountersIframe(payload:any):Observable<any>{ 
     return this.http.get(`Encounters/Encounter/${payload.userID}/${payload.encounterID}`)
   }
-  // patientList(payload:any):Observable<any>{
-  //   return this.http.post(`Pateint/PateintList`,payload)
-  // }
+  getHeaders() {
+    const userID = this.authService.profile.userID;
+    let httpHeaders = new HttpHeaders();
+    httpHeaders = httpHeaders.set('token', userID);
+    return httpHeaders;
+  }
+   groupmeeting(payload:any):Observable<any>{
+    return this.http.post(`GroupMeeting/GetUserMeetings`,payload, { headers: this.getHeaders()})
+   }
 }
+
 
 
 

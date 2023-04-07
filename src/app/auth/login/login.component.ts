@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit{
   // toggleShowPassword() {
   //   this.showPassword = !this.showPassword;
   // }
-  onLogin() { 
+  onLogin() {  
     
     console.log('UserName',this.registrationForm.value.userName)
     console.log('password',this.registrationForm.value.password) 
