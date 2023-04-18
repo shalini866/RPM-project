@@ -1,5 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { describe, expect, it,beforeEach } from '@jest/globals';
 import { VitalsComponent } from './vitals.component';
 
 describe('VitalsComponent', () => {
@@ -8,7 +9,8 @@ describe('VitalsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VitalsComponent ]
+      declarations: [ VitalsComponent ],
+      imports:[HttpClient]
     })
     .compileComponents();
 

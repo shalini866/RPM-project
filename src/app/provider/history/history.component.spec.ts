@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { describe, expect, it,beforeEach } from '@jest/globals';
 import { HistoryComponent } from './history.component';
 
 describe('HistoryComponent', () => {

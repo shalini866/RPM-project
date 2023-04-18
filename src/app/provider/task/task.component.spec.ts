@@ -1,5 +1,8 @@
+// import { HttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
+import { describe, expect, it,beforeEach } from '@jest/globals';
 import { TaskComponent } from './task.component';
 
 describe('TaskComponent', () => {
@@ -8,7 +11,10 @@ describe('TaskComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TaskComponent ]
+      declarations: [ TaskComponent ],
+      // imports: [HttpClient],
+      imports: [HttpClientTestingModule],
+
     })
     .compileComponents();
 

@@ -1,5 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { describe, expect, it,beforeEach } from '@jest/globals';
 import { GroupMeetingComponent } from './group-meeting.component';
 
 describe('GroupMeetingComponent', () => {
@@ -8,7 +9,8 @@ describe('GroupMeetingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GroupMeetingComponent ]
+      declarations: [ GroupMeetingComponent ],
+      imports:[HttpClient]
     })
     .compileComponents();
 

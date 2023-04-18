@@ -1,5 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { describe, expect, it,beforeEach } from '@jest/globals';
 import { AlertsComponent } from './alerts.component';
 
 describe('AlertsComponent', () => {
@@ -8,7 +9,8 @@ describe('AlertsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AlertsComponent ]
+      declarations: [ AlertsComponent ],
+      imports: [HttpClient]
     })
     .compileComponents();
 

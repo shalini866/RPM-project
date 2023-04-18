@@ -178,7 +178,7 @@ export class EncounterComponent implements OnInit {
         payload = {
           ...payload,
           "providerOnly": true,
-          "sortBy": sort.sortBy,
+          "sortBy": sort.sortBy, 
           "status": [2],
           "type": -2,
           "sortDirection": sort.sortDirection
@@ -219,12 +219,11 @@ export class EncounterComponent implements OnInit {
 
   onSort(event: any) {
     const cloumn = event.column.name
-    if (cloumn === 'Reported' || cloumn === 'Status') {
+    if (cloumn =='Reported' || cloumn =='Status') {
       console.log('column', cloumn);
-      let sortBy = 0;
       let sortDirection = 0;
-      if (event.newValue = 'asc') {
-
+      let sortBy = 0;
+      if (event.newValue =='asc') {
         sortDirection = 0;
       }
       else {

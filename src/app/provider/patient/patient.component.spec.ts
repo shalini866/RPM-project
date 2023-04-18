@@ -1,5 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { describe, expect, it,beforeEach } from '@jest/globals';
 import { PatientComponent } from './patient.component';
 
 describe('PatientComponent', () => {
@@ -8,7 +9,8 @@ describe('PatientComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PatientComponent ]
+      declarations: [ PatientComponent ],
+      imports: [HttpClient]
     })
     .compileComponents();
 

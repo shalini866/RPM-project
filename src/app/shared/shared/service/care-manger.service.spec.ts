@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-
+import { describe, expect, it,beforeEach } from '@jest/globals';
 import { CareMangerService } from './care-manger.service';
 
 describe('CareMangerService', () => {

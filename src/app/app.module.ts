@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbThemeModule, NbLayoutModule, NbButtonModule, NbCardModule, NbIconModule, NbFormFieldModule, NbDatepickerModule, NbUserComponent, NbUserModule, NbSidebarModule, NbMenuModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HTTPInterceptor } from './shared/interceptor/http.interceptor';
 
 
@@ -42,7 +42,9 @@ import { HTTPInterceptor } from './shared/interceptor/http.interceptor';
       provide: HTTP_INTERCEPTORS,
       useClass: HTTPInterceptor,
       multi: true,
-    }
+    },
+  [HttpClient]
+
   ],
   bootstrap: [AppComponent],
 })
